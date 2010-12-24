@@ -1,0 +1,20 @@
+## Mac OS
+.DS_Store
+
+## Emacs
+*.elc
+*~
+\#*
+.\#*
+*~
+.*~
+
+## Vim
+*.sw[po]
+
+## TextMate
+*.tmproj
+tmtags
+
+## Log
+*.log
