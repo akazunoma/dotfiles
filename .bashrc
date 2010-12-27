@@ -1,5 +1,6 @@
 # Editor
 export EDITOR="emacsclient"
+export GIT_EDIOR="vim"
 
 # History
 export HISTSIZE="10000"
