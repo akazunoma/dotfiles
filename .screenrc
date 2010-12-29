@@ -1,4 +1,12 @@
+# coding
+defutf8 on
+defkanji utf-8
+encoding utf-8 utf-8
+defencoding utf-8
+
+# no start up message
 startup_message off
+
 escape ^z^z
 defscrollback 10000
 caption always '%?%F%{= cW}%:%{= Kk}%?%2n%f%07=%t%='

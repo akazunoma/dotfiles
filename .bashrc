@@ -2,6 +2,9 @@
 export EDITOR="emacsclient"
 export GIT_EDIOR="vim"
 
+# Git
+source "$DOTFILES/.git-completion.bash"
+
 # History
 export HISTSIZE="10000"
 export HISTFILESIZE="10000"
