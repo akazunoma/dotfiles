@@ -1,13 +1,34 @@
-# coding
+# encode
 defutf8 on
 defkanji utf-8
 encoding utf-8 utf-8
 defencoding utf-8
 
+# set term
+term xterm-color
+
 # no start up message
 startup_message off
 
+# key
 escape ^z^z
+
+# scroll buffer
 defscrollback 10000
-caption always '%?%F%{= cW}%:%{= Kk}%?%2n%f%07=%t%='
-hardstatus alwayslastline '%m/%d %02c:%s %{= .c}%H%{-} %L=%-w%45L>%{=u c.}%n %t%{-}%+w %-17<%=%{= .y}(%l)'
+
+# don't remove windows from the window list as soon as window process exits
+zombie kr
+# zombie
+
+# list of all windows is displayed in the blank window for visual window selection.
+bind w windowlist -b
+windowlist title '%{u .c}Num Flags Title%=[0-9] select the number [movement] j,C-n:Down k,C-p:Up (C-)f:PageDown (C-)b:PageUp'
+windowlist string '%{.c}%3n %f%09=%{dc} %t %='
+
+# caption and hardstatus
+caption always '%?%F%{= cw}%:%{= dd}%?%2n%f%07=%t%='
+hardstatus alwayslastline '%{= .c}%H%{-} %L=%-w%45L>%{=u c.}%n %t%{-}%+w %-17<%=%m/%d %02c:%s'
+sorendition "+rb .c"
+
+# default
+chdir
