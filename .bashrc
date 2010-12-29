@@ -8,6 +8,7 @@ export HISTFILESIZE="10000"
 export HISTCONTROL="ignoredups"
 
 # Other Aliases
+alias s="screen"
 alias e="emacs"
 alias emacsclient="emacsclient -n"
 alias ec="emacsclient"
