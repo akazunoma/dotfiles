@@ -1,0 +1,9 @@
+# list of all windows is displayed in the blank window for visual window selection.
+bind w windowlist -b
+windowlist title '%{u .g}Num Flags Title%=[0-9] select the number [movement] j,C-n:Down k,C-p:Up (C-)f:PageDown (C-)b:PageUp'
+windowlist string '%{.g}%3n %f%09=%{dg} %t %='
+
+# caption and hardstatus
+caption always '%?%F%{= gw}%:%{= dd}%?%2n%f%07=%t%='
+hardstatus alwayslastline '%{= .g}%H%{-} %L=%-w%45L>%{=u g.}%n %t%{-}%+w %-17<%=%m/%d %02c:%s'
+sorendition "+rb .g"
