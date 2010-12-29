@@ -16,7 +16,7 @@ alias less="less -R"
 alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
 
 # Readline
-bind -x '"\C-x\C-e": e'
+bind -x '"\C-x\C-e": emacs'
 bind '"\e\C-f": forward-word'
 bind '"\e\C-b": backward-word'
 
