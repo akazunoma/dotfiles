@@ -49,3 +49,15 @@ else
     end
   end
 end
+
+# make .screenrc.local for depending environment
+screen_local = "#{HOME}/.screenrc.local"
+screen_path  = "#{DOTFILES}/.screenrc.#{UNAME}"
+if File.exists?(screen_local)
+  puts "ln: #{screen_local}: file exists"
+else
+  if File.exists?(screen_path)
+    puts "ln -s #{screen_path} #{screen_local}"
+    File.symlink(screen_path, screen_local)
+  end
+end
