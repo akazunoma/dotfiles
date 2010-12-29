@@ -1,4 +1,4 @@
-# If not running interactively, don't do anything
+# if not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
 # append to the history file, don't overwrite it
@@ -19,7 +19,7 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
-# If this is an xterm set the title to user@host:dir
+# if this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
   PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
@@ -35,12 +35,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# set language
+# language
 case "$TERM" in
   linux) LANG=C ;;
   *) LANG=ja_JP.UTF-8 ;;
