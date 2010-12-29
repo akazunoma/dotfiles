@@ -19,6 +19,7 @@
   ca = commit -a
   cam = commit -a --amend
   co = checkout
+  cob = checkout -b
   cp = cherry-pick
   cpn = cherry-pick -n
   br = branch
@@ -32,6 +33,7 @@
   ll = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'
   lg = log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn %Creset%s'
   rank = shortlog -s -n --no-merges
+  d = diff
   dm = diff master
   dw = diff --color-words
   dc = diff --cached
