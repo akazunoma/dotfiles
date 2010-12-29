@@ -1,1 +1,5 @@
+startup_message off
 escape ^z^z
+defscrollback 10000
+caption always '%?%F%{= cW}%:%{= Kk}%?%2n%f%07=%t%='
+hardstatus alwayslastline '%m/%d %02c:%s %{= .c}%H%{-} %L=%-w%45L>%{=u c.}%n %t%{-}%+w %-17<%=%{= .y}(%l)'
