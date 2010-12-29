@@ -16,6 +16,9 @@ escape ^z^z
 # scroll buffer
 defscrollback 10000
 
+# enable to scroll by mouse or keyboard
+termcapinfo xterm* ti@:te@
+
 # don't remove windows from the window list as soon as window process exits
 zombie kr
 # zombie
