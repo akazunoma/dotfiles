@@ -32,3 +32,6 @@ sorendition "+rb .c"
 
 # default
 chdir
+
+# include local .screenrc
+source '.screenrc.local'
