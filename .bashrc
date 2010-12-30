@@ -1,6 +1,6 @@
 # editor
 export EDITOR="emacsclient"
-export GIT_EDIOR="vim"
+export GIT_EDITOR="vim"
 
 # git
 source "$DOTFILES/.git-completion.bash"
