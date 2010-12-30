@@ -1,0 +1,2 @@
+# open carbon emacs
+bind -c emacs ^e exec open -a emacs
