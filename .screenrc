@@ -13,15 +13,15 @@ startup_message off
 # key
 escape ^z^z
 
-# scroll buffer
-defscrollback 10000
-markkeys h=^B:l=^F:$=^E
+# don't remove windows from the window list as soon as window process exits
+zombie kr
 
 # enable to scroll by mouse or keyboard
 termcapinfo xterm* ti@:te@
 
-# don't remove windows from the window list as soon as window process exits
-zombie kr
+# scroll buffer
+defscrollback 10000
+markkeys h=^B:l=^F:$=^E
 
 # shortcut of screen with title option.
 bind s colon 'screen -t '
@@ -40,10 +40,10 @@ bind ^w windowlist -b
 windowlist title '%{u .c}Num Flags Title%=[0-9] select the number [movement] j,C-n:Down k,C-p:Up (C-)f:PageDown (C-)b:PageUp'
 windowlist string '%{.c}%3n %f%09=%{dc} %t %='
 
-# caption and hardstatus
-caption always '%?%F%{= cw}%:%{= wk}%?%2n%f%07=%t%='
+# hardstatus and caption
 hardstatus on
 hardstatus alwayslastline '%{= .c}%H%{-} %L=%-w%45L>%{=u c.}%n %t%{-}%+w %-17<%=%m/%d %02c:%s'
+caption always '%?%F%{= cw}%:%{= wk}%?%2n%f%07=%t%='
 sorendition '+rb .c'
 
 # include local .screenrc
