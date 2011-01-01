@@ -1,3 +1,6 @@
+# if not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # editor
 export EDITOR="emacsclient"
 export GIT_EDITOR="vim"
