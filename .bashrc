@@ -20,6 +20,7 @@ alias la="ls -A"
 alias l="ls -CF"
 
 # other aliases
+alias ..="cd .."
 alias s="screen"
 alias e="emacs"
 alias emacsclient="emacsclient -n"
