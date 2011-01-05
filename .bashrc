@@ -1,6 +1,9 @@
 # if not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# check the window size
+shopt -s checkwinsize
+
 # editor
 export EDITOR="emacsclient"
 export GIT_EDITOR="vim"
@@ -12,6 +15,7 @@ source "$DOTFILES/.git-completion.bash"
 export HISTSIZE="10000"
 export HISTFILESIZE="10000"
 export HISTCONTROL="ignoredups"
+shopt -s histappend
 
 # some more ls aliases
 alias ls="ls -G"
