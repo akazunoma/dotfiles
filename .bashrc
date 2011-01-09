@@ -32,6 +32,7 @@ alias ec="emacsclient"
 alias g="git"
 alias less="less -R"
 alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
+alias df="df -h"
 
 # readline bind
 bind -x '"\C-x\C-e": emacs'
