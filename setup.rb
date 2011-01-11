@@ -3,7 +3,7 @@
 # get environment
 UNAME    = `uname`.strip.downcase
 HOME     = ENV['HOME']
-DOTFILES = "#{HOME}/dropbox/dot"
+DOTFILES = File.dirname(File.expand_path(__FILE__))
 
 # dotfiles name
 dotfiles = ['.emacs.d',
@@ -42,7 +42,7 @@ if File.exists?(bashrc)
 else
   puts "make #{bashrc}"
   File.open(bashrc, 'w') do |file|
-    file.puts 'DOTFILES="$HOME/dropbox/dot"'
+    file.puts "DOTFILES=\"#{DOTFILES}\""
     file.puts 'source $DOTFILES/.bashrc'
     if File.exists?("#{DOTFILES}/#{bash_local}")
       file.puts "source $DOTFILES/#{bash_local}"
