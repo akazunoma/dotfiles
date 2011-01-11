@@ -1,0 +1,8 @@
+== dotfiles
+
+My dotfiles.
+
+== Installation
+
+$ git clone git://github.com/mitukiii/dotfiles.git
+$ ruby dotfiles/setup.rb
