@@ -8,6 +8,7 @@
 (add-hook 'ruby-mode-hook
           '(lambda ()
              (define-key ruby-mode-map (kbd "C-m") 'ruby-reindent-then-newline-and-indent)
+             (define-key ruby-mode-map (kbd "C-j") 'newline)
              (define-key ruby-mode-map (kbd "M-a") 'ruby-beginning-of-defun)
              (define-key ruby-mode-map (kbd "M-e") 'ruby-end-of-defun)
              (define-key ruby-mode-map (kbd "M-f") 'ruby-forward-sexp)
