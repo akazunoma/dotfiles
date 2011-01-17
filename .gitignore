@@ -16,5 +16,10 @@
 *.tmproj
 tmtags
 
+## Xcode
+build/
+*.pbxuser
+*.mode1v3
+
 ## Log
 *.log
