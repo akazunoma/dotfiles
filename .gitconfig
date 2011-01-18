@@ -8,6 +8,15 @@
   branch = auto
   interactive = auto
   grep = auto
+[color "diff"]
+  plain = normal
+  meta = bold green
+  frag = bold cyan
+  func = bold magenta
+  old = bold red
+  new = bold blue
+  commit = bold white
+  whitespace = normal magenta
 [core]
   excludesfile = ~/.gitignore
   pager = LESS=-R less
