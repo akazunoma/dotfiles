@@ -28,9 +28,9 @@
 ;; $ chmod +x bin/rsense
 ;; $ ruby etc/config.rb > ~/.rsense
 ;; $ cd
-;; $ curl -O http://www.ruby-lang.org/ja/man/archive/ruby-refm-1.9.2-dynamic-20100929.zip
-;; $ unzip ruby-refm-1.9.2-dynamic-20100929.zip
-;; $ mv ruby-refm-1.9.2-dynamic-20100929 ~/dropbox/doc/refm/ruby-refm
+;; $ curl -O http://www.ruby-lang.org/ja/man/archive/ruby-refm-1.9.2-dynamic-20101229.tar.bz2
+;; $ tar zxvf ruby-refm-1.9.2-dynamic-20101229.tar.bz2
+;; $ mv ruby-refm-1.9.2-dynamic-20101229 ~/dropbox/doc/refm/ruby-refm
 (setq rsense-home (expand-file-name "~/.emacs.d/elisp/rsense"))
 (add-to-list 'load-path (concat rsense-home "/etc"))
 (require 'rsense)
