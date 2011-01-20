@@ -18,6 +18,10 @@
              (define-key ruby-mode-map (kbd "C-M-e") 'forward-sentence)
              (define-key ruby-mode-map (kbd "C-M-f") 'forward-word)
              (define-key ruby-mode-map (kbd "C-M-b") 'backward-word)))
+(add-hook 'after-save-hook
+          '(lambda()
+             (when (string-match "[Gg]emfile$" buffer-file-name)
+               (growl "File has been modified" "Should be bundle install"))))
 
 ;; rsense
 ;; $ cd
