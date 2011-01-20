@@ -20,12 +20,12 @@
   (other-window 1))
 
 ;; growl
-(when (setq growl-program (executable-find "growlnotify"))
-  (defun growl (title message &optional app)
+(setq growl-program (executable-find "growlnotify"))
+(defun growl (title message &optional app)
+  (when growl-program
     (unless app
       (setq app ""))
     (start-process "Growl" "*Growl*" growl-program
                    "-t" title
                    "-m" message
                    "-a" app)))
-
