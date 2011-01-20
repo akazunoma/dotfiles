@@ -3,7 +3,8 @@
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.builder$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("[Rr]akefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("[Gg]emfile$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (add-hook 'ruby-mode-hook
           '(lambda ()
