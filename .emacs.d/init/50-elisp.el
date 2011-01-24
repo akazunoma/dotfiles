@@ -9,3 +9,8 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'after-save-hook
+          '(lambda ()
+             (when (string-match "\\.el$" buffer-file-name)
+               (byte-compile-file buffer-file-name)
+               (growl "Byte complie elisp" buffer-file-name))))

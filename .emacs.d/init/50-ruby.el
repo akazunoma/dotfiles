@@ -19,9 +19,9 @@
              (define-key ruby-mode-map (kbd "C-M-f") 'forward-word)
              (define-key ruby-mode-map (kbd "C-M-b") 'backward-word)))
 (add-hook 'after-save-hook
-          '(lambda()
+          '(lambda ()
              (when (string-match "[Gg]emfile$" buffer-file-name)
-               (growl "File has been modified" "Should be bundle install"))))
+               (growl "Gefile has been modified" "Should be bundle install"))))
 
 ;; rsense
 ;; $ cd
