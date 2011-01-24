@@ -1,4 +1,4 @@
-#! /Users/ktakeshima/.rvm/rubies/ruby-1.9.2-p0/bin/ruby -sWKu
+#! /Users/ktakeshima/.rvm/rubies/ruby-1.9.2-p136/bin/ruby -sWKu
 # -*- coding: utf-8 -*-
 
 #
