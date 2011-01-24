@@ -5,5 +5,4 @@
 ;; $ mv evernote-mode-0_13 ~/.emacs.d/elisp/evernote
 ;; $ cd ~/.emacs.d/elisp/evernote
 ;; $ ruby ruby/setup.rb
-(add-to-list 'load-path "~/.emacs.d/elisp/evernote")
 (require 'evernote-mode)

@@ -37,7 +37,6 @@
 ;; $ tar zxvf ruby-refm-1.9.2-dynamic-20101229.tar.bz2
 ;; $ mv ruby-refm-1.9.2-dynamic-20101229 ~/dropbox/doc/refm/ruby-refm
 (setq rsense-home (expand-file-name "~/.emacs.d/elisp/rsense"))
-(add-to-list 'load-path (concat rsense-home "/etc"))
 (require 'rsense)
 (setq rsense-rurema-home "~/dropbox/doc/refm/ruby-refm")
 (setq rsense-rurema-refe "refe-1_9_2")
