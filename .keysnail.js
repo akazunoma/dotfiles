@@ -23,7 +23,6 @@ key.suspendKey           = "<f2>";
 
 // ================================= Hooks ================================= //
 
-
 hook.setHook('KeyBoardQuit', function (aEvent) {
     if (key.currentKeySequence.length) {
         return;
@@ -48,6 +47,16 @@ hook.setHook('KeyBoardQuit', function (aEvent) {
     }
 });
 
+// ============================== Black list =============================== //
+
+hook.addToHook("LocationChange", function (aNsURI) {
+    var URL = aNsURI ? aNsURI.spec : null;
+    key.suspendWhenMatched(URL, key.blackList);
+});
+
+key.blackList = [
+    'http://www.tumblr.com/'
+];
 
 // ============================= Key bindings ============================== //
 
