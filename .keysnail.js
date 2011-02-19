@@ -156,11 +156,11 @@ key.setGlobalKey('C-M-h', function (ev) {
     getBrowser().mTabContainer.advanceSelectedTab(-1, true);
 }, 'ひとつ左のタブへ');
 
-key.setViewKey([['C-n'], ['j']], function (ev) {
+key.setViewKey([['C-n']], function (ev) {
     key.generateKey(ev.originalTarget, KeyEvent.DOM_VK_DOWN, true);
 }, '一行スクロールダウン');
 
-key.setViewKey([['C-p'], ['k']], function (ev) {
+key.setViewKey([['C-p']], function (ev) {
     key.generateKey(ev.originalTarget, KeyEvent.DOM_VK_UP, true);
 }, '一行スクロールアップ');
 
