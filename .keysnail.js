@@ -16,9 +16,9 @@ key.escapeKey            = "C-q";
 key.macroStartKey        = "undefined";
 key.macroEndKey          = "undefined";
 key.universalArgumentKey = "C-u";
-key.negativeArgument1Key = "C--";
-key.negativeArgument2Key = "C-M--";
-key.negativeArgument3Key = "M--";
+key.negativeArgument1Key = "undefined";
+key.negativeArgument2Key = "undefined";
+key.negativeArgument3Key = "undefined";
 key.suspendKey           = "<f2>";
 
 // ================================= Hooks ================================= //
