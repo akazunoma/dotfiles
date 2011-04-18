@@ -21,7 +21,7 @@
 (add-hook 'after-save-hook
           '(lambda ()
              (when (string-match "[Gg]emfile$" buffer-file-name)
-               (growl "Gefile has been modified" "Should be bundle install"))))
+               (growl "Gemfile has been modified" "Should be bundle install"))))
 
 ;; rsense
 ;; $ cd
