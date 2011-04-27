@@ -25,6 +25,8 @@ alias l="ls -CF"
 
 # other aliases
 alias ..="cd .."
+alias r="rails"
+alias p="padrino"
 alias s="screen"
 alias e="emacs"
 alias emacsclient="emacsclient -n"
