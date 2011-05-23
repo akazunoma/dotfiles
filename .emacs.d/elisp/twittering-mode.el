@@ -47,16 +47,17 @@
 (require 'xml)
 (require 'parse-time)
 (when (> 22 emacs-major-version)
-  (setq load-path
-	(append (mapcar (lambda (dir)
-			  (expand-file-name
-			   dir
-			   (if load-file-name
-			       (or (file-name-directory load-file-name)
-				   ".")
-			     ".")))
-			'("url-emacs21" "emacs21"))
-		load-path))
+  (eval-and-compile
+    (setq load-path
+	  (append (mapcar (lambda (dir)
+			    (expand-file-name
+			     dir
+			     (if load-file-name
+				 (or (file-name-directory load-file-name)
+				     ".")
+			       ".")))
+			  '("url-emacs21" "emacs21"))
+		  load-path)))
   (and (require 'un-define nil t)
        ;; the explicitly require 'unicode to update a workaround with
        ;; navi2ch. see a comment of `twittering-ucs-to-char' for more
@@ -374,6 +375,16 @@ This value will be used only when showing new tweets.
 
 See `twittering-show-replied-tweets' for more details.")
 
+(defvar twittering-disable-overlay-on-too-long-string nil
+  "*If non-nil, disable overlay on too long string on edit buffer.
+
+If nil, `twittering-edit-mode' puts an overlay `twittering-warning-overlay' on
+characters following the 140th character.
+
+On some environments, some input methods seem to interfere the update of the
+overlay. In such case, you may avoid the problems by setting this variable to
+non-nil.")
+
 (defvar twittering-use-show-minibuffer-length t
   "*Show current length of minibuffer if this variable is non-nil.
 
@@ -458,10 +469,16 @@ which is a lambda expression without being compiled.")
 
 (defvar twittering-update-status-function
   'twittering-update-status-from-pop-up-buffer
-  "The function used to posting a tweet. It takes two arguments:
-the first argument INIT-STR is initial text to be edited and the
-second argument REPLY-TO-ID is a user ID of a tweet to which you
-are going to reply.
+  "The function used to posting a tweet. It takes 5 arguments,
+INIT-STR, REPLY-TO-ID, USERNAME, TWEET-TYPE-AS-SPEC, CURRENT-SPEC.
+The first argument INIT-STR is nil or an initial text to be edited.
+REPLY-TO-ID and USERNAME are an ID and a user-screen-name of a tweet to
+which you are going to reply. If the tweet is not a reply, they are nil.
+TWEET-TYPE-AS-SPEC is a timeline spec specifying a type of a tweet being
+edited. Now, only `(direct-messages)' and nil are available as
+TWEET-TYPE-AS-SPEC. If TWEET-TYPE-AS-SPEC is nil, it means that a tweet is
+edited as a normal tweet.
+CURRENT-SPEC means on which timeline the function is called.
 
 Twittering-mode provides two functions for updating status:
 * `twittering-update-status-from-minibuffer': edit tweets in minibuffer
@@ -526,6 +543,24 @@ StatusNet Service.")
       (setq result (cons (match-string 1 str) result))
       (setq pos (match-end 0)))
     (reverse result)))
+
+(defun twittering-process-alive-p (proc)
+  "Return non-nil if PROC is alive."
+  (not (memq (process-status proc) '(nil closed exit failed signal))))
+
+(defun twittering-start-process-with-sentinel (name buffer program args sentinel)
+  "Start a program in a subprocess with a sentinel.
+
+This function is the same as `start-process' except that SENTINEL must
+be invoked when the process is successfully started."
+  (let ((proc (apply 'start-process name buffer program args)))
+    (when (and proc (functionp sentinel))
+      (if (twittering-process-alive-p proc)
+	  (set-process-sentinel proc sentinel)
+	;; Ensure that the sentinel is invoked if a subprocess is
+	;; successfully started.
+	(funcall sentinel proc "finished")))
+    proc))
 
 ;;;;
 ;;;; Utility for portability
@@ -898,7 +933,7 @@ its file name. The certificate is retrieved from
   (if twittering-cert-file
       twittering-cert-file
     (let ((file-name (make-temp-file "twmode-cacert"))
-	  (coding-system-for-write 'us-ascii))
+	  (coding-system-for-write 'iso-safe))
       (with-temp-file file-name
 	(insert "-----BEGIN CERTIFICATE-----
 MIIDIDCCAomgAwIBAgIENd70zzANBgkqhkiG9w0BAQUFADBOMQswCQYDVQQGEwJV
@@ -1382,8 +1417,7 @@ The method to perform the request is determined from
 			 (apply func proc status connection-info
 				header-info nil))))))
 	   ;; unwind-forms
-	   (when (and mes (or (twittering-buffer-related-p)
-			      (twittering-account-authorization-queried-p)))
+	   (when (and mes (twittering-buffer-related-p))
 	     ;; CLEAN-UP-FUNC can overwrite a message from the return value
 	     ;; of FUNC.
 	     (message "%s" mes))
@@ -1491,7 +1525,10 @@ The method to perform the request is determined from
 		   nil connect-host connect-port)))
     (when proc
       (set-process-buffer proc buffer)
-      (set-process-sentinel proc sentinel)
+      (when (functionp sentinel)
+	(if (twittering-process-alive-p proc)
+	    (set-process-sentinel proc sentinel)
+	  (funcall sentinel proc "finished")))
       (process-send-string proc request-str)
       proc)))
 
@@ -1558,8 +1595,8 @@ The method to perform the request is determined from
   (when (twittering-start-http-session-curl-p)
     (unless twittering-curl-program-https-capability
       (with-temp-buffer
-	(let ((coding-system-for-read 'us-ascii)
-	      (coding-system-for-write 'us-ascii))
+	(let ((coding-system-for-read 'iso-safe)
+	      (coding-system-for-write 'iso-safe))
 	  (call-process twittering-curl-program
 			nil (current-buffer) nil
 			"--version")
@@ -1633,12 +1670,10 @@ The method to perform the request is determined from
 	   ;; file if you use Emacs on Cygwin.
 	   (if use-ssl
 	       cacert-dir
-	     default-directory))
-	 (proc (apply 'start-process name buffer
-		      twittering-curl-program curl-args)))
-    (when (and proc (functionp sentinel))
-      (set-process-sentinel proc sentinel))
-    proc))
+	     default-directory)))
+    (twittering-start-process-with-sentinel name buffer
+					    twittering-curl-program
+					    curl-args sentinel)))
 
 (defun twittering-pre-process-buffer-curl (proc buffer connection-info)
   (let ((use-ssl (cdr (assq 'use-ssl connection-info)))
@@ -1739,12 +1774,10 @@ The method to perform the request is determined from
 	  `(,@(when (and use-proxy proxy-server proxy-port)
 		`(,(format "%s_proxy=%s://%s:%s/" scheme
 			   scheme proxy-server proxy-port)))
-	    ,@process-environment))
-	 (proc
-	  (apply 'start-process name buffer twittering-wget-program args)))
-    (when (and proc (functionp sentinel))
-      (set-process-sentinel proc sentinel))
-    proc))
+	    ,@process-environment)))
+    (twittering-start-process-with-sentinel name buffer
+					    twittering-wget-program args
+					    sentinel)))
 
 (defun twittering-pre-process-buffer-wget (proc buffer connection-info)
   (with-current-buffer buffer
@@ -2516,31 +2549,36 @@ function."
 	    ("Content-Type" . "application/x-www-form-urlencoded"))
 	  url post-body)))
     (lexical-let ((result 'queried))
-      (twittering-send-http-request
-       request nil
-       (lambda (proc status connection-info header-info)
-	 (let ((status-line (cdr (assq 'status-line header-info)))
-	       (status-code (cdr (assq 'status-code header-info))))
-	   (case-string
-	    status-code
-	    (("200")
-	     (when twittering-debug-mode
-	       (let ((buffer (current-buffer)))
-		 (with-current-buffer (twittering-debug-buffer)
-		   (insert-buffer-substring buffer))))
-	     (setq result
-		   (twittering-oauth-make-response-alist (buffer-string)))
-	     nil)
-	    (t
-	     (setq result nil)
-	     (format "Response: %s" status-line)))))
-       (lambda (proc status connection-info)
-	 (when (and (memq status '(nil closed exit failed signal))
-		    (eq result 'queried))
-	   (setq result nil))))
-      (while (eq result 'queried)
-	(sit-for 0.1))
-      result)))
+      (let ((proc
+	     (twittering-send-http-request
+	      request nil
+	      (lambda (proc status connection-info header-info)
+		(let ((status-line (cdr (assq 'status-line header-info)))
+		      (status-code (cdr (assq 'status-code header-info))))
+		  (case-string
+		   status-code
+		   (("200")
+		    (when twittering-debug-mode
+		      (let ((buffer (current-buffer)))
+			(with-current-buffer (twittering-debug-buffer)
+			  (insert-buffer-substring buffer))))
+		    (setq result
+			  (twittering-oauth-make-response-alist
+			   (buffer-string)))
+		    nil)
+		   (t
+		    (setq result nil)
+		    (format "Response: %s" status-line)))))
+	      (lambda (proc status connection-info)
+		(when (and (not (twittering-process-alive-p proc))
+			   (eq result 'queried))
+		  (setq result nil))))))
+	(while (and (eq result 'queried)
+		    (twittering-process-alive-p proc))
+	  (sit-for 0.1))
+	(when (eq result 'queried)
+	  (setq result nil))
+	result))))
 
 (defun twittering-oauth-get-request-token (url consumer-key consumer-secret)
   (let ((auth-str
@@ -2970,7 +3008,11 @@ exiting abnormally by decoding unknown numeric character reference."
      'decode-char 'after 'twittering-add-fail-over-to-decode-char)
     (ad-activate 'decode-char)
     (unwind-protect
-	(apply 'xml-parse-region args)
+	(condition-case err
+	    (apply 'xml-parse-region args)
+	  (error
+	   (message "Failed to parse the retrieved XML.")
+	   nil))
       (ad-disable-advice 'decode-char 'after
 			 'twittering-add-fail-over-to-decode-char)
       (if activated
@@ -3050,25 +3092,29 @@ BEG and END mean a region that had been modified."
       nil)
      (t
       (lexical-let ((result 'queried))
-	(twittering-send-http-request
-	 request additional-info
-	 (lambda (proc status connection-info header-info)
-	   (let ((status-line (cdr (assq 'status-line header-info)))
-		 (status-code (cdr (assq 'status-code header-info))))
-	     (case-string
-	      status-code
-	      (("200")
-	       (setq result (buffer-string))
-	       nil)
-	      (t
-	       (setq result nil)
-	       (format "Response: %s" status-line)))))
-	 (lambda (proc status connection-info)
-	   (when (and (memq status '(nil closed exit failed signal))
-		      (eq result 'queried))
-	     (setq result nil))))
-	(while (eq result 'queried)
-	  (sit-for 0.1))
+	(let ((proc
+	       (twittering-send-http-request
+		request additional-info
+		(lambda (proc status connection-info header-info)
+		  (let ((status-line (cdr (assq 'status-line header-info)))
+			(status-code (cdr (assq 'status-code header-info))))
+		    (case-string
+		     status-code
+		     (("200")
+		      (setq result (buffer-string))
+		      nil)
+		     (t
+		      (setq result nil)
+		      (format "Response: %s" status-line)))))
+		(lambda (proc status connection-info)
+		  (when (and (not (twittering-process-alive-p proc))
+			     (eq result 'queried))
+		    (setq result nil))))))
+	  (while (and (eq result 'queried)
+		      (twittering-process-alive-p proc))
+	    (sit-for 0.1))
+	  (when (eq result 'queried)
+	    (setq result nil)))
 	(let ((processed-result (if (and result (functionp post-process))
 				    (funcall post-process service result)
 				  result)))
@@ -3230,7 +3276,9 @@ If SHORTEN is non-nil, the abbreviated expression will be used."
   (defmacro twittering-make-list-timeline-spec-direct (owner listname)
     `(list 'list ,owner ,listname))
   (defmacro twittering-make-hashtag-timeline-spec-direct (tag)
-    `(list 'search (concat "#" ,tag))))
+    `(list 'search (concat "#" ,tag)))
+  (defmacro twittering-make-hashtag-timeline-spec-string-direct (tag)
+    `(concat "#" ,tag)))
 
 (defun twittering-extract-timeline-spec (str &optional unresolved-aliases)
   "Extract one timeline spec from STR.
@@ -3386,6 +3434,17 @@ Return nil if SPEC-STR is invalid as a timeline spec."
 direct_messages."
   (and spec
        (memq (car spec) '(direct_messages direct_messages_sent))))
+
+(defun twittering-timeline-spec-is-search-p (spec)
+  "Return non-nil if SPEC is a search timeline spec."
+  (and (consp spec)
+       (eq 'search (car spec))))
+
+(defun twittering-extract-query-string-from-search-timeline-spec (spec)
+  "Return the query string if SPEC is a search timeline spec.
+If SPEC is not a search timeline spec, return nil."
+  (and (eq 'search (car spec))
+       (cadr spec)))
 
 (defun twittering-equal-string-as-timeline (spec-str1 spec-str2)
   "Return non-nil if SPEC-STR1 equals SPEC-STR2 as a timeline spec."
@@ -3559,6 +3618,16 @@ Statuses are stored in ascending-order with respect to their IDs."
 	       (assq twittering-service-method
 		     twittering-service-method-table)))))
     (funcall func username id)))
+
+(defun twittering-get-list-url (username listname)
+  "Generate a URL of a specific list."
+  (let ((func
+	 (cdr (assq
+	       'status-url
+	       (assq twittering-service-method
+		     twittering-service-method-table))))
+	(str (concat username "/" listname)))
+    (funcall func str nil)))
 
 (defun twittering-get-status-url-twitter (username &optional id)
   "Generate status URL for Twitter."
@@ -4086,8 +4155,14 @@ If `twittering-password' is nil, read it from the minibuffer."
 	  (setq twittering-oauth-access-token-alist nil))
 	 (t
 	  ;; wait for verification to finish.
-	  (while (twittering-account-authorization-queried-p)
-	    (sit-for 0.1))))))
+	  (while (and (twittering-account-authorization-queried-p)
+		      (twittering-process-alive-p proc))
+	    (sit-for 0.1))
+	  (when (twittering-account-authorization-queried-p)
+	    (message
+	     "Status of Authorization process is `%s'. Type M-x twit to retry."
+	     (process-status proc))
+	    (setq twittering-account-authorization nil))))))
      (t
       (message "Failed to load an authorized token from \"%s\"."
 	       twittering-private-info-file)
@@ -4184,8 +4259,14 @@ If `twittering-password' is nil, read it from the minibuffer."
 	(setq twittering-password nil))
        (t
 	;; wait for verification to finish.
-	(while (twittering-account-authorization-queried-p)
-	  (sit-for 0.1))))))
+	(while (and (twittering-account-authorization-queried-p)
+		    (twittering-process-alive-p proc))
+	  (sit-for 0.1))
+	(when (twittering-account-authorization-queried-p)
+	  (message
+	   "Status of Authorization process is `%s'. Type M-x twit to retry."
+	   (process-status proc))
+	  (setq twittering-account-authorization nil))))))
    (t
     (message "%s is invalid as an authorization method."
 	     twittering-auth-method)))
@@ -4193,32 +4274,34 @@ If `twittering-password' is nil, read it from the minibuffer."
 
 (defun twittering-http-get-verify-credentials-sentinel (proc status connection-info header-info)
   (let ((status-line (cdr (assq 'status-line header-info)))
-	(status-code (cdr (assq 'status-code header-info))))
+	(status-code (cdr (assq 'status-code header-info)))
+	(username (cdr (assq 'username connection-info))))
     (case-string
      status-code
      (("200")
       (cond
        ((eq twittering-auth-method 'basic)
-	(setq twittering-username (cdr (assq 'username connection-info)))
+	(setq twittering-username username)
 	(setq twittering-password (cdr (assq 'password connection-info))))
        (t
-	(setq twittering-username (cdr (assq 'username connection-info)))))
+	(setq twittering-username username)))
       (setq twittering-account-authorization 'authorized)
       (twittering-start)
-      (format "Authorization for the account \"%s\" succeeded."
-	      (twittering-get-username)))
+      (message "Authorization for the account \"%s\" succeeded." username)
+      nil)
      (t
       (setq twittering-account-authorization nil)
       (let ((error-mes
 	     (format "Authorization for the account \"%s\" failed. Type M-x twit to retry."
-		     (twittering-get-username))))
+		     username)))
 	(cond
 	 ((memq twittering-auth-method '(oauth xauth))
 	  (setq twittering-oauth-access-token-alist nil))
 	 ((eq twittering-auth-method 'basic)
 	  (setq twittering-username nil)
 	  (setq twittering-password nil)))
-	error-mes)))))
+	(message "%s" error-mes)
+	nil)))))
 
 (defun twittering-http-get-verify-credentials-clean-up-sentinel (proc status connection-info)
   (when (and (memq status '(exit signal closed failed))
@@ -4499,8 +4582,7 @@ If `twittering-password' is nil, read it from the minibuffer."
   (let ((proc (funcall function username)))
     (when proc
       (while (and (not twittering-list-index-retrieved)
-		  (not (memq (process-status proc)
-			     '(exit signal closed failed nil))))
+		  (twittering-process-alive-p proc))
 	(sit-for 0.1))))
   (cond
    ((null twittering-list-index-retrieved)
@@ -5466,8 +5548,9 @@ following symbols;
 		  ((match-string 1 str)
 		   ;; hashtag
 		   (let* ((hashtag (match-string 1 str))
-			  (spec (twittering-make-hashtag-timeline-spec-direct
-				 hashtag))
+			  (spec-string
+			   (twittering-make-hashtag-timeline-spec-string-direct
+			    hashtag))
 			  (url (twittering-get-search-url
 				(concat "#" hashtag))))
 		     (list
@@ -5475,7 +5558,7 @@ following symbols;
 		      'mouse-face 'highlight
 		      'keymap twittering-mode-on-uri-map
 		      'uri url
-		      'goto-spec spec
+		      'goto-spec spec-string
 		      'face 'twittering-username-face)))
 		  ((match-string 2 str)
 		   ;; @USER/LIST
@@ -5489,7 +5572,7 @@ following symbols;
 		      beg end
 		      'mouse-face 'highlight
 		      'keymap twittering-mode-on-uri-map
-		      'uri (twittering-get-status-url list-name)
+		      'uri (twittering-get-list-url owner list-name)
 		      'goto-spec
 		      (twittering-make-list-timeline-spec-direct owner
 								 list-name)
@@ -6604,8 +6687,8 @@ been initialized yet."
       (if (null twittering-convert-program)
 	  (setq twittering-use-convert nil)
 	(with-temp-buffer
-	  (let ((coding-system-for-read 'us-ascii)
-		(coding-system-for-write 'us-ascii))
+	  (let ((coding-system-for-read 'iso-safe)
+		(coding-system-for-write 'iso-safe))
 	    (call-process twittering-convert-program nil (current-buffer) nil
 			  "-version")
 	    (goto-char (point-min))
@@ -6701,11 +6784,13 @@ been initialized yet."
     (footer-only-normal
      . ((nil _ twittering-edit-skeleton-footer) . normal))
     (inherit-hashtags
-     . (twittering-edit-skeleton-inherit-hashtags . reply))
+     . [(twittering-edit-skeleton-inherit-hashtags . normal)
+	(twittering-edit-skeleton-inherit-hashtags . reply)])
     (inherit-mentions
      . (twittering-edit-skeleton-inherit-mentions . reply))
     (inherit-any
      . [(twittering-edit-skeleton-inherit-mentions . reply)
+	(twittering-edit-skeleton-inherit-hashtags . normal)
 	(twittering-edit-skeleton-inherit-hashtags . reply)]))
   "*Alist of skeletons performed on `twittering-update-status-interactive'.
 A key of the alist is a symbol and each value is nil, (SKELETON . PRED),
@@ -6722,13 +6807,19 @@ If PRED is a symbol, the value is performed only when it equals to the
 type of the tweet being edited. The type is one of 'normal, 'reply and
 'direct-message.
 If PRED is a function, the value is performed only when the predicate
-function PRED returns non-nil. PRED is invoked with two arguments
-TWEET-TYPE and IN-REPLY-TO-ID.
+function PRED returns non-nil. PRED is invoked with three arguments
+TWEET-TYPE, IN-REPLY-TO-ID and CURRENT-SPEC.
 TWEET-TYPE is a symbol, which is one of 'normal, 'reply, and 'direct-message,
 specifying which type of tweet will be edited.
 If the tweet will not be edited as a reply, IN-REPLY-TO-ID is nil.
 If the tweet will be edited as a reply, IN-REPLY-TO-ID is a string specifying
 the replied tweet.
+CURRENT-SPEC specifies where the action of posting a tweet is performed.
+If the action is performed on a twittering-mode buffer, CURRENT-SPEC is
+a timeline spec string of the buffer.
+If the action is performed on other buffers, CURRENT-SPEC is nil.
+If the option IGNORE-CURRENT-SPEC for `twittering-update-status' is non-nil,
+CURRENT-SPEC is also nil.
 
 If PRED matches the current context, the value is performed as follows.
 The value like (SKELETON . PRED) is performed by directly using SKELETON as an
@@ -6774,7 +6865,7 @@ entry in `twittering-edit-skeleton-alist' are performed.")
       (setq twittering-edit-skeleton-footer footer-str)))
   (message "Current footer: [%s]" twittering-edit-skeleton-footer))
 
-(defun twittering-edit-skeleton-insert-base (&optional tweet-type in-reply-to-id)
+(defun twittering-edit-skeleton-insert-base (&optional tweet-type in-reply-to-id current-spec)
   (let ((entry
 	 (cdr (assq twittering-edit-skeleton twittering-edit-skeleton-alist))))
     (when entry
@@ -6792,25 +6883,29 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 				   (eq pred tweet-type)))
 		      (cond
 		       ((functionp skeleton-or-func)
-			(funcall skeleton-or-func tweet-type in-reply-to-id))
+			(funcall skeleton-or-func tweet-type in-reply-to-id
+				 current-spec))
 		       (t
 			(skeleton-insert skeleton-or-func))))))
 		skeletons)))))
 
-(defun twittering-edit-skeleton-insert (&optional tweet-type in-reply-to-id)
+(defun twittering-edit-skeleton-insert (&optional tweet-type in-reply-to-id current-spec)
   (if (> 22 emacs-major-version)
       ;; This prevents Emacs21 from inserting skeletons before the cursor.
       (let ((current (point))
 	    (pair (with-temp-buffer
 		    (twittering-edit-skeleton-insert-base tweet-type
-							  in-reply-to-id)
+							  in-reply-to-id
+							  current-spec)
 		    `(,(buffer-string) . ,(point)))))
 	(insert (car pair))
 	(goto-char (+ -1 current (cdr pair))))
-    (twittering-edit-skeleton-insert-base tweet-type in-reply-to-id)))
+    (twittering-edit-skeleton-insert-base tweet-type in-reply-to-id
+					  current-spec)))
 
-(defun twittering-edit-skeleton-inherit-hashtags (tweet-type in-reply-to-id)
-  (when in-reply-to-id
+(defun twittering-edit-skeleton-inherit-hashtags (tweet-type in-reply-to-id current-spec)
+  (cond
+   (in-reply-to-id
     (let* ((status (twittering-find-status in-reply-to-id))
 	   (text (cdr (assq 'text status)))
 	   (hashtags
@@ -6822,9 +6917,20 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 	    (mapconcat (lambda (tag) (concat "#" tag))
 		       hashtags " ")))
       (when hashtags
-	(skeleton-insert `(nil _ " " ,footer))))))
+	(skeleton-insert `(nil _ " " ,footer)))))
+   ((twittering-timeline-spec-is-search-p current-spec)
+    (let* ((query-string
+	    (twittering-extract-query-string-from-search-timeline-spec
+	     current-spec))
+	   (hashtag-list
+	    (twittering-extract-matched-substring-all
+	     (concat "\\(" twittering-regexp-hash "[a-zA-Z0-9_-]+\\)")
+	     query-string)))
+      (when hashtag-list
+	(let ((footer (mapconcat 'identity hashtag-list " ")))
+	  (skeleton-insert `(nil _ " " ,footer))))))))
 
-(defun twittering-edit-skeleton-inherit-mentions (tweet-type in-reply-to-id)
+(defun twittering-edit-skeleton-inherit-mentions (tweet-type in-reply-to-id current-spec)
   (when in-reply-to-id
     (let* ((status (twittering-find-status in-reply-to-id))
 	   (text (cdr (assq 'text status)))
@@ -6894,9 +7000,10 @@ entry in `twittering-edit-skeleton-alist' are performed.")
     (setq mode-name
 	  (format "twmode-status-edit[%d/%d/140]" length maxlen))
     (force-mode-line-update)
-    (if (< maxlen length)
-	(move-overlay twittering-warning-overlay (1+ maxlen) (1+ length))
-      (move-overlay twittering-warning-overlay 1 1))))
+    (unless twittering-disable-overlay-on-too-long-string
+      (if (< maxlen length)
+	  (move-overlay twittering-warning-overlay (1+ maxlen) (1+ length))
+	(move-overlay twittering-warning-overlay 1 1)))))
 
 (defun twittering-edit-extract-status ()
   (if (eq major-mode 'twittering-edit-mode)
@@ -6943,7 +7050,7 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 	  (when (< (window-end window t) current-tail)
 	    (twittering-set-window-end window current-tail)))))))
 
-(defun twittering-update-status-from-pop-up-buffer (&optional init-str reply-to-id username spec)
+(defun twittering-update-status-from-pop-up-buffer (&optional init-str reply-to-id username tweet-type-as-spec current-spec)
   (interactive)
   (let ((buf (generate-new-buffer twittering-edit-buffer)))
     (setq twittering-pre-edit-window-configuration
@@ -6954,8 +7061,8 @@ entry in `twittering-edit-skeleton-alist' are performed.")
       (pop-to-buffer buf)
       (twittering-ensure-whole-of-status-is-visible win))
     (twittering-edit-mode)
-    (twittering-edit-setup-help username spec)
-    (if (twittering-timeline-spec-is-direct-messages-p spec)
+    (twittering-edit-setup-help username tweet-type-as-spec)
+    (if (twittering-timeline-spec-is-direct-messages-p tweet-type-as-spec)
 	(message "C-c C-c to send, C-c C-k to cancel")
       (and (null init-str)
 	   twittering-current-hashtag
@@ -6965,16 +7072,18 @@ entry in `twittering-edit-skeleton-alist' are performed.")
       (insert init-str)
       (set-buffer-modified-p nil))
     (make-local-variable 'twittering-reply-recipient)
-    (setq twittering-reply-recipient `(,reply-to-id ,username ,spec))
+    (setq twittering-reply-recipient
+	  `(,reply-to-id ,username ,tweet-type-as-spec))
     (let ((tweet-type
 	   (cond
-	    ((twittering-timeline-spec-is-direct-messages-p spec)
+	    ((twittering-timeline-spec-is-direct-messages-p tweet-type-as-spec)
 	     'direct-message)
 	    (reply-to-id
 	     'reply)
 	    (t
 	     'normal))))
-      (twittering-edit-skeleton-insert tweet-type reply-to-id))))
+      (twittering-edit-skeleton-insert tweet-type reply-to-id
+				       current-spec))))
 
 (defun twittering-edit-post-status ()
   (interactive)
@@ -7096,8 +7205,8 @@ entry in `twittering-edit-skeleton-alist' are performed.")
       (re-search-forward "\\`[[:space:]]*@[a-zA-Z0-9_-]+\\([[:space:]]+@[a-zA-Z0-9_-]+\\)*" nil t)
       (re-search-forward "[^[:space:]]" nil t))))
 
-(defun twittering-update-status-from-minibuffer (&optional init-str reply-to-id username spec)
-  (and (not (twittering-timeline-spec-is-direct-messages-p spec))
+(defun twittering-update-status-from-minibuffer (&optional init-str reply-to-id username tweet-type-as-spec current-spec)
+  (and (not (twittering-timeline-spec-is-direct-messages-p tweet-type-as-spec))
        (null init-str)
        twittering-current-hashtag
        (setq init-str (format " #%s " twittering-current-hashtag)))
@@ -7107,15 +7216,18 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 	     (insert init-str))
 	   (let ((tweet-type
 		  (cond
-		   ((twittering-timeline-spec-is-direct-messages-p spec)
+		   ((twittering-timeline-spec-is-direct-messages-p
+		     tweet-type-as-spec)
 		    'direct-message)
 		   (reply-to-id
 		    'reply)
 		   (t
 		    'normal))))
-	     (twittering-edit-skeleton-insert tweet-type reply-to-id))
+	     (twittering-edit-skeleton-insert tweet-type reply-to-id
+					      current-spec))
 	   `(,(buffer-string) . ,(point))))
-	(sign-str (if (twittering-timeline-spec-is-direct-messages-p spec)
+	(sign-str (if (twittering-timeline-spec-is-direct-messages-p
+		       tweet-type-as-spec)
 		      nil
 		    (twittering-sign-string)))
 	(not-posted-p t)
@@ -7135,7 +7247,8 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 	      (setq prompt "status: ")
 	      (when (twittering-status-not-blank-p status)
 		(cond
-		 ((twittering-timeline-spec-is-direct-messages-p spec)
+		 ((twittering-timeline-spec-is-direct-messages-p
+		   tweet-type-as-spec)
 		  (if username
 		      (twittering-call-api 'send-direct-message
 					   `((username . ,username)
@@ -7476,9 +7589,27 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 
 ;;;; Commands for posting a status
 
+(defun twittering-update-status (&optional init-str reply-to-id username tweet-type-as-spec ignore-current-spec)
+  "Post a tweet.
+The first argument INIT-STR is nil or an initial text to be edited.
+REPLY-TO-ID and USERNAME are an ID and a user-screen-name of a tweet to
+which you are going to reply. If the tweet is not a reply, they are nil.
+TWEET-TYPE-AS-SPEC is a timeline spec specifying a type of a tweet being
+edited. Now, only `(direct-messages)' and nil are available as
+TWEET-TYPE-AS-SPEC. If TWEET-TYPE-AS-SPEC is nil, it means that a tweet is
+edited as a normal tweet.
+If IGNORE-CURRENT-SPEC is non-nil, the timeline spec of the current buffer
+is sent to the function specified by `twittering-update-status-function'.
+
+How to edit a tweet is determined by `twittering-update-status-funcion'."
+  (let ((current-spec (unless ignore-current-spec
+			(twittering-current-timeline-spec))))
+    (funcall twittering-update-status-function init-str reply-to-id username
+	     tweet-type-as-spec current-spec)))
+
 (defun twittering-update-status-interactive ()
   (interactive)
-  (funcall twittering-update-status-function))
+  (twittering-update-status))
 
 (defun twittering-update-lambda ()
   (interactive)
@@ -7520,14 +7651,13 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 		   'twittering-user-history)))
     (if (string= "" username)
 	(message "No user selected")
-      (funcall twittering-update-status-function
-	       nil nil username '(direct_messages)))))
+      (twittering-update-status nil nil username '(direct_messages)))))
 
 (defun twittering-reply-to-user ()
   (interactive)
   (let ((username (get-text-property (point) 'username)))
     (if username
-	(funcall twittering-update-status-function (concat "@" username " "))
+	(twittering-update-status (concat "@" username " "))
       (message "No user selected"))))
 
 ;;;; Command for deleting a status
@@ -7604,7 +7734,7 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 		    (format-time-string (match-string 1 str) ',retweet-time))))
 	       ))
 	    )
-	(funcall twittering-update-status-function
+	(twittering-update-status
 	 (twittering-format-string format-str prefix replace-table))
 	))))
 
@@ -7652,19 +7782,19 @@ entry in `twittering-edit-skeleton-alist' are performed.")
 	(screen-name-in-text
 	 (get-text-property (point) 'screen-name-in-text)))
     (cond (screen-name-in-text
-	   (funcall twittering-update-status-function
-		    (if (twittering-timeline-spec-is-direct-messages-p spec)
-			nil
-		      (concat "@" screen-name-in-text " "))
-		    id screen-name-in-text spec))
+	   (twittering-update-status
+	    (if (twittering-timeline-spec-is-direct-messages-p spec)
+		nil
+	      (concat "@" screen-name-in-text " "))
+	    id screen-name-in-text spec))
 	  (uri
 	   (browse-url uri))
 	  (username
-	   (funcall twittering-update-status-function
-		    (if (twittering-timeline-spec-is-direct-messages-p spec)
-			nil
-		      (concat "@" username " "))
-		    id username spec)))))
+	   (twittering-update-status
+	    (if (twittering-timeline-spec-is-direct-messages-p spec)
+		nil
+	      (concat "@" username " "))
+	    id username spec)))))
 
 (defun twittering-view-user-page ()
   (interactive)
