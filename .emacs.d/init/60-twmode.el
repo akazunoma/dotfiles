@@ -1,7 +1,7 @@
 ;; twittering mode
 ;; (install-elisp "http://github.com/hayamiz/twittering-mode/raw/master/twittering-mode.el")
 (require 'twittering-mode)
-(setq twittering-status-format "%i @%s: %T [%@]")
+(setq twittering-status-format "%i @%s: %T [%@ / %f]")
 (setq twittering-retweet-format " RT @%s: %t")
 (setq twittering-use-ssl nil)
 (setq twittering-icon-mode nil)
@@ -9,6 +9,7 @@
 (setq twittering-convert-fix-size 48)
 (setq twittering-timer-interval 300)
 (setq twittering-update-status-function 'twittering-update-status-from-pop-up-buffer)
+(setq twittering-disable-overlay-on-too-long-string t)
 (add-hook 'twittering-mode-hook
           '(lambda ()
              (define-key twittering-mode-map (kbd "t") 'other-window-or-split-vertically)
