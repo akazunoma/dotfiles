@@ -9,8 +9,7 @@ DOTFILES = File.dirname(File.expand_path(__FILE__))
 dotfiles = ['.emacs.d',
             '.screenrc',
             '.gitconfig',
-            '.gitignore',
-            '.keysnail.js']
+            '.gitignore']
 
 # make dotfiles symlink
 dotfiles.each do |filename|
