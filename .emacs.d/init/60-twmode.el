@@ -1,7 +1,7 @@
 ;; twittering mode
 ;; (install-elisp "http://github.com/hayamiz/twittering-mode/raw/master/twittering-mode.el")
 (require 'twittering-mode)
-(setq twittering-status-format "%i %s: %T [%c / %f]")
+(setq twittering-status-format "%i %C{%H:%M} %s: %T [%f]")
 (setq twittering-retweet-format " RT @%s: %t")
 (setq twittering-use-ssl nil)
 (setq twittering-icon-mode nil)
