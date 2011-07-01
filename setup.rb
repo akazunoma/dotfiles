@@ -8,6 +8,7 @@ DOTFILES = File.dirname(File.expand_path(__FILE__))
 # dotfiles name
 dotfiles = ['.emacs.d',
             '.irbrc',
+            '.inputrc',
             '.screenrc',
             '.gitconfig',
             '.gitignore']

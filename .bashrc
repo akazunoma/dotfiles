@@ -45,11 +45,6 @@ alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
 alias df="df -h"
 
-# readline bind
-bind -x '"\C-x\C-e": emacs'
-bind '"\e\C-f": forward-word'
-bind '"\e\C-b": backward-word'
-
 # dropbox
 DROPBOX_HOME="$HOME/dropbox"
 export PATH="$PATH:$DROPBOX_HOME/bin"
