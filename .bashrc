@@ -41,6 +41,7 @@ alias gi="git"
 alias gt="git"
 alias gti="git"
 alias less="less -R"
+alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
 alias df="df -h"
 
