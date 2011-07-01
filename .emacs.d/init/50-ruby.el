@@ -49,3 +49,11 @@
              (add-to-list 'ac-sources 'ac-source-rsense-method)
              (add-to-list 'ac-sources 'ac-source-rsense-constant)
              (define-key ruby-mode-map (kbd "C-x C-.") 'ac-complete)))
+
+;; haml mode
+;; (install-elisp "https://raw.github.com/nex3/haml-mode/master/haml-mode.el")
+(require 'haml-mode)
+
+;; sass mode
+;; (install-elisp "https://raw.github.com/nex3/sass-mode/master/sass-mode.el")
+(require 'sass-mode)
