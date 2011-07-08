@@ -10,9 +10,9 @@
   (interactive)
   (shell-command-to-string "open -a terminal"))
 
-(defun open-echofon ()
+(defun open-yorufukurou ()
   (interactive)
-  (shell-command-to-string "open -a echofon"))
+  (shell-command-to-string "open -a yorufukurou"))
 
 (defun browse-url-default-macosx-browser (url &optional new-window)
   (interactive (browse-url-interactive-arg "URL: "))
@@ -21,4 +21,5 @@
 (define-key global-map (kbd "C-x C-d") 'copy-current-dir)
 (define-key global-map (kbd "C-x C-p") 'copy-current-path)
 (define-key global-map (kbd "C-x C-t") 'open-terminal)
-(define-key global-map (kbd "A-C-e") 'open-echofon)
+(define-key global-map (kbd "A-E") 'open-yorufukurou)
+
