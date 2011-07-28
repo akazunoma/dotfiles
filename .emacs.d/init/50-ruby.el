@@ -57,3 +57,16 @@
 ;; sass mode
 ;; (install-elisp "https://raw.github.com/nex3/sass-mode/master/sass-mode.el")
 (require 'sass-mode)
+
+;; execute ruby
+(defun execute-ruby-whole-buffer ()
+  (interactive)
+  (let (buf)
+    (save-excursion
+      (setq buf (get-buffer-create "*result ruby execution*"))
+      (mark-whole-buffer)
+      (call-process-region (region-beginning) (region-end) "ruby" nil buf nil)
+      (display-buffer buf))))
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             (define-key ruby-mode-map (kbd "C-x C-e") 'execute-ruby-whole-buffer)))
