@@ -58,6 +58,9 @@
 ;; (install-elisp "https://raw.github.com/nex3/sass-mode/master/sass-mode.el")
 (require 'sass-mode)
 
+;; rinari
+(require 'rinari)
+
 ;; execute ruby
 (defun execute-ruby-whole-buffer ()
   (interactive)
