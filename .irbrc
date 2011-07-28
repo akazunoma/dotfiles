@@ -4,6 +4,8 @@ require 'rubygems'
 require 'irb/completion'
 require 'open-uri'
 require 'yaml'
+require 'json'
+require 'hashie'
 require 'pp'
 
 IRB.conf[:AUTO_INDENT] = true
