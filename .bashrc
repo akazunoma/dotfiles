@@ -24,9 +24,9 @@ alias la="ls -A"
 alias l="ls -CF"
 
 # enable color support
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+alias grep='grep --color=auto --exclude=*.svn* --exclude=*.git*'
+alias fgrep='fgrep --color=auto --exclude=*.svn* --exclude=*.git*'
+alias egrep='egrep --color=auto --exclude=*.svn* --exclude=*.git*'
 
 # other aliases
 alias ..="cd .."
@@ -51,3 +51,6 @@ export PATH="$PATH:$DROPBOX_HOME/bin"
 
 # rsense
 export RSENSE_HOME="$HOME/.emacs.d/elisp/rsense"
+
+# ignore
+export FIGNORE=".svn"
