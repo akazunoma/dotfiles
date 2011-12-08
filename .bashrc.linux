@@ -30,3 +30,6 @@ case "$TERM" in
 esac
 
 export PATH="$PATH:/var/lib/gems/1.9.1/bin"
+
+export EDITOR="vim"
+export GIT_EDITOR="vim"

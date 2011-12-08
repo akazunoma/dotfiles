@@ -6,7 +6,7 @@ shopt -s checkwinsize
 
 # editor
 export EDITOR="emacsclient"
-export GIT_EDITOR="vim"
+export GIT_EDITOR="emacsclient"
 
 # git
 source "$DOTFILES/.git-completion.bash"
