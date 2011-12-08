@@ -64,7 +64,7 @@
 
 
 ;; rinari
-;; (require 'rinari)
+(require 'rinari)
 
 ;; execute ruby
 (defun execute-ruby-whole-buffer ()
