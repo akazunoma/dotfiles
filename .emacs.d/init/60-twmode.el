@@ -7,7 +7,7 @@
 (setq twittering-icon-mode nil)
 (setq twittering-scroll-mode nil)
 (setq twittering-convert-fix-size 48)
-(setq twittering-timer-interval 300)
+(setq twittering-timer-interval 30)
 (setq twittering-update-status-function 'twittering-update-status-from-pop-up-buffer)
 (setq twittering-disable-overlay-on-too-long-string t)
 (add-hook 'twittering-mode-hook
