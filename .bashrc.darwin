@@ -10,9 +10,10 @@ export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # npm
-export NODE_PATH="$HOME/.npm/lib:$PATH"
-export PATH="$HOME/.npm/bin:$PATH"
-export MANPATH="$HOME/.npm/man:$MANPATH"
+NPM_HOME="$HOME/.npm"
+export NODE_PATH="$NPM_HOME/lib:$PATH"
+export PATH="$NPM_HOME/bin:$PATH"
+export MANPATH="$NPM_HOME/man:$MANPATH"
 
 # rvm
 source $HOME/.rvm/scripts/rvm
