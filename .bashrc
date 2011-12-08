@@ -45,10 +45,6 @@ alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
 alias df="df -h"
 
-# dropbox
-DROPBOX_HOME="$HOME/dropbox"
-export PATH="$PATH:$DROPBOX_HOME/bin"
-
 # rsense
 export RSENSE_HOME="$HOME/.emacs.d/elisp/rsense"
 
