@@ -9,6 +9,7 @@
 (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("[Rr]akefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("[Gg]emfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("[Cc]apfile$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (add-hook 'ruby-mode-hook
           '(lambda ()
@@ -57,6 +58,10 @@
 ;; sass mode
 ;; (install-elisp "https://raw.github.com/nex3/sass-mode/master/sass-mode.el")
 (require 'sass-mode)
+(add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
+(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
+(add-to-list 'auto-mode-alist '("\\.less$" . sass-mode))
+
 
 ;; rinari
 (require 'rinari)
