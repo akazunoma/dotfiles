@@ -38,12 +38,12 @@
 ;; $ chmod +x bin/rsense
 ;; $ ruby etc/config.rb > ~/.rsense
 ;; $ cd
-;; $ curl -O http://www.ruby-lang.org/ja/man/archive/ruby-refm-1.9.2-dynamic-20101229.tar.bz2
-;; $ tar zxvf ruby-refm-1.9.2-dynamic-20101229.tar.bz2
-;; $ mv ruby-refm-1.9.2-dynamic-20101229 ~/dropbox/doc/refm/ruby-refm
+;; $ curl -O http://www.ruby-lang.org/ja/man/archive/ruby-refm-1.9.2-dynamic-20110629.zip
+;; $ unzip ruby-refm-1.9.2-dynamic-20110629.zip
+;; $ mv ruby-refm-1.9.2-dynamic-20110629 ~/Dropbox/Documents/ruby-refm
 (setq rsense-home (expand-file-name "~/.emacs.d/elisp/rsense"))
 (require 'rsense)
-(setq rsense-rurema-home "~/dropbox/doc/refm/ruby-refm")
+(setq rsense-rurema-home "~/Dropbox/Documents/ruby-refm")
 (setq rsense-rurema-refe "refe-1_9_2")
 (add-hook 'ruby-mode-hook
           '(lambda ()
