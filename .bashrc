@@ -30,6 +30,7 @@ alias egrep='egrep --color=auto --exclude=*.svn* --exclude=*.git*'
 
 # other aliases
 alias ..="cd .."
+alias irb="pry"
 alias r="rails"
 alias p="padrino"
 alias s="screen"
