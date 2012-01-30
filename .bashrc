@@ -23,10 +23,8 @@ alias ll="ls -alF"
 alias la="ls -A"
 alias l="ls -CF"
 
-# enable color support
-alias grep='grep --color=auto --exclude=*.svn* --exclude=*.git*'
-alias fgrep='fgrep --color=auto --exclude=*.svn* --exclude=*.git*'
-alias egrep='egrep --color=auto --exclude=*.svn* --exclude=*.git*'
+# grep options
+export GREP_OPTIONS='--color=auto --exclude=*.svn* --exclude=*.git*'
 
 # other aliases
 alias ..="cd .."
