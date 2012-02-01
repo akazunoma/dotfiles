@@ -8552,16 +8552,7 @@ How to edit a tweet is determined by `twittering-update-status-funcion'."
 	(method (if remove 'destroy-favorites 'create-favorites)))
     (set-text-properties 0 (length text) nil text)
     (if id
-	(let ((mes (format "%s \"%s\"? "
-			   (if remove "Unfavorite" "Favorite")
-			   (if (< width (string-width text))
-			       (concat
-				(truncate-string-to-width text (- width 3))
-				"...")
-			     text))))
-	  (if (y-or-n-p mes)
-	      (twittering-call-api method `((id . ,id)))
-	    (message "Request canceled")))
+	  (twittering-call-api method `((id . ,id)))
       (message "No status selected"))))
 
 (defun twittering-unfavorite ()
