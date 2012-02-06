@@ -15,6 +15,9 @@ export MANPATH="$NPM_HOME/man:$MANPATH"
 # rvm
 source $HOME/.rvm/scripts/rvm
 
+# gisty
+export GISTY_DIR="$HOME/Dropbox/Programming/Gist"
+
 # other aliases
 alias emacs="open -a /Applications/Emacs.app"
 alias en="emacs -n --args --debug-init"
