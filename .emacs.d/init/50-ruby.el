@@ -10,6 +10,7 @@
 (add-to-list 'auto-mode-alist '("[Rr]akefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("[Gg]emfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("[Cc]apfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("[Gg]uardfile$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (add-hook 'ruby-mode-hook
           '(lambda ()
