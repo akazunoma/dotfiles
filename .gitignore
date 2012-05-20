@@ -1,0 +1,44 @@
+## OSX
+.DS_Store
+.Trashes
+
+## Emacs
+*~
+\#*\#
+.\#*
+*.elc
+
+## Vim
+.*.sw[a-z]
+*.un~
+Session.vim
+
+## TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+## Eclipse
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+## SVN
+.svn/
+
+## CVS
+/CVS/*
+*/CVS/*
+.cvsignore
+*/.cvsignore
