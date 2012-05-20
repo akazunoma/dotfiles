@@ -1,3 +1,0 @@
-# open carbon emacs
-bind -c emacs ^e exec open -a emacs
-bind -c emacs ^g exec open -a 'google chrome'
