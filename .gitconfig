@@ -19,39 +19,46 @@
   whitespace = normal magenta
 [core]
   excludesfile = ~/.gitignore
-  pager = LESS=-R less
   autocrlf = input
 [alias]
-  st = status
-  sh = show
-  ad = add
-  ca = commit -a
-  cam = commit -a --amend
-  co = checkout
-  cob = checkout -b
-  cp = cherry-pick
-  cpn = cherry-pick -n
-  br = branch
-  ba = branch -a
-  bm = branch --merged
-  bn = branch --no-merge
-  wc = whatchanged
-  l = log --stat
-  la = log -p
-  lo = log origin
-  ll = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'
-  lg = log --graph --pretty=format:'%Cgreen%h %ad %Cblue%cn %Creset%s %Cred%d'
-  rank = shortlog -s -n --no-merges
-  d = diff
-  dm = diff master
-  dw = diff --color-words
-  dc = diff --cached
-  ds = diff --staged
-  d1 = diff HEAD~
-  d2 = diff HEAD~~
-  d3 = diff HEAD~~~
-  d4 = diff HEAD~~~~
-  d5 = diff HEAD~~~~~
-  d10 = diff HEAD~~~~~~~~~~
-  gr = grep
-  gn = grep -n
+  s    = status
+  ss   = status -s
+  sh   = show
+  a    = add
+  c    = commit
+  ca   = commit -a
+  cam  = commit --amend
+  caam = commit -a --amend
+  cp   = cherry-pick
+  cpn  = cherry-pick -n
+  co   = checkout
+  cb   = checkout -b
+  cm   = checkout master
+  rb   = rebase
+  rbm  = rebase master
+  rbi  = rebase -i
+  rbo  = rebase --onto
+  rbc  = rebase --continue
+  rba  = rebase --abort
+  rs   = reset
+  rss  = reset --soft
+  rssh = reset --soft HEAD^
+  rsh  = reset --hard
+  rshh = reset --hard HEAD^
+  m    = merge
+  mn   = merge --no-ff
+  br   = branch
+  ba   = branch -a
+  ft   = fetch
+  pl   = pull
+  ps   = push
+  l    = log --stat --date=iso
+  la   = log -p --date=iso
+  ll   = log --graph --date=iso --all --pretty=format:'%h %Cgreen%ad %Cblue%cn %Creset%s %Cred%d'
+  d    = diff
+  dm   = diff master
+  dw   = diff --color-words
+  dc   = diff --cached
+  gr   = grep -n
+  gri  = grep -n -i
+  grl  = grep -l

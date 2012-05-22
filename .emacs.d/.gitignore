@@ -1,7 +1,5 @@
-*account.el
-ac-comphist.dat
-anything-c-adaptive-history
-auto-save-list
-undohist
-url
+*private.el
 kill-ring-saved.el
+ac-comphist.dat
+auto-save-list/
+undohist/

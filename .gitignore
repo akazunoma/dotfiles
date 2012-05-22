@@ -1,25 +1,44 @@
-## Mac OS
+## OSX
 .DS_Store
+.Trashes
 
 ## Emacs
-*.elc
 *~
-\#*
+\#*\#
 .\#*
-*~
-.*~
+*.elc
 
 ## Vim
-*.sw[po]
+.*.sw[a-z]
+*.un~
+Session.vim
 
 ## TextMate
 *.tmproj
+*.tmproject
 tmtags
 
-## Xcode
-build/
-*.pbxuser
-*.mode1v3
+## Eclipse
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
 
-## Log
-*.log
+## SVN
+.svn/
+
+## CVS
+/CVS/*
+*/CVS/*
+.cvsignore
+*/.cvsignore
