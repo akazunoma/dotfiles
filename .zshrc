@@ -41,7 +41,7 @@ function _update_rprompt() {
 }
 add-zsh-hook precmd _update_rprompt
 
-local vcs="%1(v|${green} %1v|)"
+local vcs="%1(v|${green} %1v%f|)"
 local rvm="%2(v| ${red}(%2v)%f|)"
 
 PROMPT="${base_color}%n@%m${white}:${blue}%~${white}$ "
