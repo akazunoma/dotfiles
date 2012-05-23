@@ -5,6 +5,7 @@ export LANG=ja_JP.UTF-8
 autoload -Uz colors
 colors
 
+local reset="%{${reset_color}%}"
 local green="%{${fg[green]}%}"
 local blue="%{${fg[blue]}%}"
 local red="%{${fg[red]}%}"
@@ -41,13 +42,13 @@ function _update_rprompt() {
 }
 add-zsh-hook precmd _update_rprompt
 
-local vcs="%1(v|${green} %1v%f|)"
-local rvm="%2(v| ${red}(%2v)%f|)"
+local vcs="%1(v|${green} %1v${reset}|)"
+local rvm="%2(v| ${red}(%2v)${reset}|)"
 
 PROMPT="${base_color}%n@%m${white}:${blue}%~${white}$ "
 PROMPT2="${white}> "
 SPROMPT="%r is correct [n,y,a,e]? "
-RPROMPT="${vcs}${rvm}${reset}"
+RPROMPT="${vcs}${rvm}"
 
 ## history
 HISTFILE=~/.zsh_history
