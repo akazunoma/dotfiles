@@ -22,9 +22,12 @@
   autocrlf = input
 [alias]
   s    = status
+  st   = status
   ss   = status -s
   sh   = show
   a    = add
+  ad   = add
+  ap   = add -p
   c    = commit
   ca   = commit -a
   cam  = commit --amend
