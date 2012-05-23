@@ -178,6 +178,8 @@ setopt complete_aliases
 
 alias reload="source $HOME/.zshrc"
 
+alias nyan='nc -v miku.acm.uiuc.edu 23'
+
 case $OSTYPE in
 darwin*)
   alias ls="ls -G"
