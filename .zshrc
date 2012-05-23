@@ -219,9 +219,14 @@ alias gc="git commit"
 
 alias ec="emacsclient -n"
 
+alias be="bundle exec"
+alias bi="bundle install"
+alias bu="bundle update"
 alias irb="pry"
 alias r="rails"
-alias p="padrino"
+alias rc="rails console"
+alias rg="rails generate"
+alias rs="rails server"
 
 alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 
