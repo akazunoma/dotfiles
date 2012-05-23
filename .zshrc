@@ -158,6 +158,16 @@ linux*)
   ;;
 esac
 
+## functions
+function stats() {
+  history | awk '{print $2}' | sort | uniq -c | sort -rn | head
+}
+
+function take() {
+  mkdir -p $1
+  cd $1
+}
+
 ## aliases
 setopt complete_aliases
 
@@ -180,6 +190,9 @@ esac
 alias l="ls"
 alias la="ls -A"
 alias ll="ls -alF"
+
+alias md='mkdir -p'
+alias rd=rmdir
 
 alias du="du -h"
 alias df="df -h"
