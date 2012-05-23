@@ -131,6 +131,8 @@ esac
 ## aliases
 setopt complete_aliases
 
+alias reload="source $HOME/.zshrc"
+
 case $OSTYPE in
 darwin*)
   alias ls="ls -G"
