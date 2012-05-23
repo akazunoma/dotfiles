@@ -147,6 +147,7 @@ esac
 
 ## path
 export PATH=/usr/local/bin:$PATH
+export RSENSE_HOME="$HOME/.emacs.d/elisp/rsense"
 
 case $OSTYPE in
 darwin*)
@@ -232,8 +233,6 @@ alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 
 ## options
 export GREP_OPTIONS='--color=auto --exclude=*.git*'
-
-export RSENSE_HOME="$HOME/.emacs.d/elisp/rsense"
 
 export FIGNORE=".svn"
 
