@@ -166,7 +166,7 @@ esac
 
 ## functions
 function stats() {
-  history | awk '{print $2}' | sort | uniq -c | sort -rn | head
+  fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
 }
 
 function take() {
