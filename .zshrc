@@ -45,10 +45,10 @@ add-zsh-hook precmd _update_rprompt
 local vcs="%1(v|${green} %1v${reset}|)"
 local rvm="%2(v| ${red}(%2v)${reset}|)"
 
-PROMPT="${base_color}%n@%m${white}:${blue}%~${white}$ "
-PROMPT2="${white}> "
+PROMPT="${base_color}%n@%m${white}:${blue}%~${reset}$ "
+PROMPT2="${reset}> "
 SPROMPT="%r is correct [n,y,a,e]? "
-RPROMPT="${vcs}${rvm}"
+RPROMPT="${vcs}${rvm} (%*)"
 
 ## history
 HISTFILE=~/.zsh_history
