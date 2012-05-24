@@ -177,7 +177,7 @@ function take() {
 ## aliases
 setopt complete_aliases
 
-alias reload="source $HOME/.zshrc"
+alias reload_zsh="source $HOME/.zshrc"
 
 alias nyan='nc -v miku.acm.uiuc.edu 23'
 
