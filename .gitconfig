@@ -50,6 +50,7 @@
   rshh = reset --hard HEAD^
   m    = merge
   mn   = merge --no-ff
+  ms   = merge --squash
   br   = branch
   ba   = branch -a
   ft   = fetch
