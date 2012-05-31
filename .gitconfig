@@ -20,6 +20,8 @@
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
+[help]
+  autocorrect = 1
 [alias]
   s    = status
   st   = status
