@@ -7,4 +7,4 @@ require 'json'
 require 'hashie'
 require 'pp'
 
-Pry.prompt = proc { '>> ' }
+Pry.prompt = proc { '> ' }
