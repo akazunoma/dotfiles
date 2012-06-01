@@ -17,6 +17,25 @@
   (interactive)
   (shell-command-to-string "open -a yorufukurou"))
 
+(defun github-markup-preview ()
+  (interactive)
+  (defcustom
+    github-markup-command (executable-find "github-markup")
+    "github-markup-command"
+    :type 'string
+    :group 'github-markup)
+  (defcustom
+    github-markup-directory temporary-file-directory
+    "github-markup-directory"
+    :type 'string
+    :group 'github-markup)
+  (let ((github-markup-file-path
+         (concat github-markup-directory (format-time-string "%Y%m%d%H%M%S" (current-time)) ".html")))
+    (shell-command-to-string
+     (concat github-markup-command " " buffer-file-name " > " github-markup-file-path))
+    (shell-command-to-string
+     (concat "open " github-markup-file-path))))
+
 (define-key global-map (kbd "C-x C-d") 'copy-current-dir)
 (define-key global-map (kbd "C-x C-p") 'copy-current-path)
 (define-key global-map (kbd "C-x C-t") 'open-terminal)
