@@ -7,7 +7,7 @@ DOTFILES = File.dirname(File.expand_path(__FILE__))
 
 dotfiles = %w{.zshrc .emacs.d .gitconfig .gitignore .screenrc .gemrc .pryrc}
 
-def exec(command)
+def execute(command)
   $stdout.puts command
   system command
 end
@@ -16,7 +16,7 @@ def symlink_if_not_exists(source, dest)
   if File.exists?(dest)
     $stdout.puts "#{dest}: file exists."
   else
-    exec("ln -s #{source} #{dest}")
+    execute "ln -s #{source} #{dest}"
   end
 end
 
@@ -33,8 +33,7 @@ dest   = File.join(HOME, '.screenrc.local')
 symlink_if_not_exists(source, dest)
 
 ## .zshrc.local
-dest = File.join(HOME, '.zshrc.local')
-exec("touch #{dest}")
+execute "touch #{File.join(HOME, '.zshrc.local')}"
 
 ## .rsense
-exec("ruby #{DOTFILES}/.emacs.d/elisp/rsense/etc/config.rb > ~/.rsense")
+execute "ruby #{DOTFILES}/.emacs.d/elisp/rsense/etc/config.rb > ~/.rsense"
