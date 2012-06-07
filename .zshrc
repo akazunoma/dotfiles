@@ -206,7 +206,7 @@ alias du="du -h"
 alias df="df -h"
 
 alias less="less -R"
-alias diff="colordiff --side-by-side --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
+alias diff="colordiff --suppress-common-lines --ignore-tab-expansion --ignore-space-change"
 
 alias s="screen"
 
