@@ -169,6 +169,10 @@ function stats() {
   fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
 }
 
+function pyon() {
+  echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
+}
+
 function take() {
   mkdir -p $1
   cd $1
