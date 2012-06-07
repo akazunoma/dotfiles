@@ -1,6 +1,10 @@
 ;; Carbon Emacs
 
 ;; functions
+(defun browse-url-default-macosx-browser (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (start-process (concat "open" url) nil "open" "--background" url))
+
 (defun copy-current-dir ()
   (interactive)
   (shell-command-to-string "pwd | perl -pe 's/(\r|\n)//' | pbcopy"))
