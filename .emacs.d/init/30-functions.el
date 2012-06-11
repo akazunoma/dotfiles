@@ -1,6 +1,11 @@
 ;; Functions
 
 ;; functions
+(defun indent-whole-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max))
+  (untabify (point-min) (point-max)))
+
 (defun indent-and-back-to-indentation ()
   (interactive)
   (indent-for-tab-command)
