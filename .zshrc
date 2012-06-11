@@ -169,7 +169,7 @@ function stats() {
   fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
 }
 
-function pyon() {
+function nyan() {
   echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
 }
 
@@ -182,8 +182,6 @@ function take() {
 setopt complete_aliases
 
 alias reload_zsh="source $HOME/.zshrc"
-
-alias nyan='nc -v miku.acm.uiuc.edu 23'
 
 case $OSTYPE in
 darwin*)
