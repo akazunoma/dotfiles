@@ -137,6 +137,8 @@ zstyle ':zle:*' word-style unspecified
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
+source $HOME/.zsh/hub.zsh_completion
+
 ## editor
 export EDITOR=vim
 case $OSTYPE in
@@ -186,6 +188,7 @@ alias reload_zsh="source $HOME/.zshrc"
 case $OSTYPE in
 darwin*)
   alias ls="ls -G"
+  alias git="hub"
   alias emacs="open -a emacs"
   alias e="emacs"
   alias en="open -a emacs -n --args --debug-init"

@@ -5,7 +5,7 @@ OSX      = !!(OSTYPE =~ /^darwin/)
 HOME     = ENV['HOME']
 DOTFILES = File.dirname(File.expand_path(__FILE__))
 
-dotfiles = %w{.zshrc .emacs.d .gitconfig .gitignore .screenrc .gemrc .pryrc}
+dotfiles = %w{.zshrc .zsh .emacs.d .gitconfig .gitignore .screenrc .gemrc .pryrc}
 
 def execute(command)
   $stdout.puts command
