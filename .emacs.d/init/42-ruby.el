@@ -17,6 +17,7 @@
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (add-hook 'ruby-mode-hook
           '(lambda ()
+             (setq ruby-deep-indent-paren '(t))
              (define-key ruby-mode-map (kbd "C-x C-t") 'open-terminal)
              (define-key ruby-mode-map (kbd "C-m") 'ruby-reindent-then-newline-and-indent)
              (define-key ruby-mode-map (kbd "C-j") 'newline)
