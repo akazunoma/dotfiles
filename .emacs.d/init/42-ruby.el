@@ -30,6 +30,22 @@
              (define-key ruby-mode-map (kbd "C-M-f") 'forward-word)
              (define-key ruby-mode-map (kbd "C-M-b") 'backward-word)))
 
+;; http://willnet.in/13
+(defadvice ruby-indent-line (after unindent-closing-paren activate)
+  (let ((column (current-column))
+        indent offset)
+    (save-excursion
+      (back-to-indentation)
+      (let ((state (syntax-ppss)))
+        (setq offset (- column (current-column)))
+        (when (and (eq (char-after) ?\))
+                   (not (zerop (car state))))
+          (goto-char (cadr state))
+          (setq indent (current-indentation)))))
+    (when indent
+      (indent-line-to indent)
+      (when (> offset 0) (forward-char offset)))))
+
 ;; rsense
 ;; $ cd
 ;; $ curl -O http://cx4a.org/pub/rsense/rsense-0.3.zip
