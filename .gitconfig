@@ -61,6 +61,7 @@
   l    = log --stat --date=iso
   la   = log -p --date=iso
   ll   = log --graph --date=iso --all --pretty=format:'%h %Cgreen%ad %Cblue%cn %Creset%s %Cred%d'
+  lf   = "!f() { git log $1..$2 --name-only --oneline | grep -v ' ' | sort -u; }; f"
   d    = diff
   dm   = diff master
   dw   = diff --color-words
