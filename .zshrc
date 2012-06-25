@@ -160,6 +160,7 @@ darwin*)
   export GISTY_DIR=$HOME/Dropbox/Gist
   export PATH=$PATH:$HOME/.rvm/bin
   source $HOME/.rvm/scripts/rvm
+  source $HOME/perl5/perlbrew/etc/bashrc
   ;;
 linux*)
   export PATH=$PATH:/var/lib/gems/1.9.1/bin
