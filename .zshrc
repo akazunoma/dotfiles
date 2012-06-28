@@ -51,7 +51,7 @@ SPROMPT="%r is correct [n,y,a,e]? "
 RPROMPT="${vcs}${rvm} (%*)"
 
 ## history
-HISTFILE=~/.zsh_history
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 
@@ -109,7 +109,7 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:*:*:*' menu select
 
 [ -r /etc/ssh/ssh_known_hosts ] && _global_ssh_hosts=(${${${${(f)"$(</etc/ssh/ssh_known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+[ -r $HOME/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
   "$_global_ssh_hosts[@]"
@@ -149,7 +149,7 @@ esac
 
 ## path
 export PATH=/usr/local/bin:$PATH
-export RSENSE_HOME="$HOME/.emacs.d/elisp/rsense"
+export RSENSE_HOME=$HOME/.emacs.d/elisp/rsense
 
 case $OSTYPE in
 darwin*)
@@ -160,7 +160,8 @@ darwin*)
   export GISTY_DIR=$HOME/Dropbox/Gist
   export PATH=$PATH:$HOME/.rvm/bin
   source $HOME/.rvm/scripts/rvm
-  source $HOME/perl5/perlbrew/etc/bashrc
+  export PERLBREW_ROOT=/usr/local/perlbrew
+  source $PERLBREW_ROOT/etc/bashrc
   ;;
 linux*)
   export PATH=$PATH:/var/lib/gems/1.9.1/bin
@@ -172,13 +173,13 @@ function stats() {
   fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
 }
 
-function nyan() {
-  echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
-}
-
 function take() {
   mkdir -p $1
   cd $1
+}
+
+function nyan() {
+  echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
 }
 
 ## aliases
@@ -243,6 +244,6 @@ export GREP_OPTIONS='--color=auto --exclude=*.git*'
 export FIGNORE=".svn"
 
 ## include
-if [ -f ~/.zshrc.local ]; then
-  source ~/.zshrc.local
+if [ -f $HOME/.zshrc.local ]; then
+  source $HOME/.zshrc.local
 fi
