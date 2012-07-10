@@ -240,7 +240,8 @@ alias rc="rails console"
 alias rg="rails generate"
 alias rs="rails server"
 
-alias pyserver='python -m SimpleHTTPServer > /dev/null 2>&1 &'
+alias saba='python -m SimpleHTTPServer > /dev/null 2>&1 &'
+alias shimesaba='pkill -f "python -m SimpleHTTPServer"'
 
 ## options
 export GREP_OPTIONS='--color=auto --exclude=*.git*'
