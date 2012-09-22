@@ -42,10 +42,13 @@ function _update_rprompt() {
 }
 add-zsh-hook precmd _update_rprompt
 
+local prompt="${base_color}%n@%m${white}:${blue}%~${reset}$ "
+local prompt_ok="${green}（、･∀･）、${prompt}"
+local prompt_ng="${red}（、☓ω☓）、${prompt}"
 local vcs="%1(v|${green} %1v${reset}|)"
 local rvm="%2(v| ${red}(%2v)${reset}|)"
 
-PROMPT="${base_color}%n@%m${white}:${blue}%~${reset}$ "
+PROMPT="%0(?|${prompt_ok}|${prompt_ng})"
 PROMPT2="${reset}> "
 SPROMPT="%r is correct [n,y,a,e]? "
 RPROMPT="${vcs}${rvm} (%*)"
