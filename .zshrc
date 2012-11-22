@@ -213,9 +213,9 @@ linux*)
   ;;
 esac
 
-alias l="ls"
-alias la="ls -A"
-alias ll="ls -alF"
+alias l="ls -1"
+alias la="ls -1A"
+alias ll="ls -1alF"
 
 alias md='mkdir -p'
 alias rd=rmdir
