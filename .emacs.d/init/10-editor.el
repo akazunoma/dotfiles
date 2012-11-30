@@ -1,5 +1,9 @@
 ;; Editor
 
+;; Map
+(define-prefix-command 'tabbar-mode-map)
+(global-set-key (kbd "C-z") 'tabbar-mode-map)
+
 ;; key
 (define-key global-map (kbd "C-m") 'newline-and-indent)
 (define-key global-map (kbd "C-i") 'indent-and-back-to-indentation)
@@ -41,15 +45,18 @@
 (define-key global-map (kbd "C-x C-i") 'indent-region)
 (define-key global-map (kbd "C-c C-t") 'twittering-mode)
 (define-key global-map (kbd "C-c C-u") 'twittering-update-status-interactive)
-(define-key global-map (kbd "C-z C-z") 'suspend-emacs)
-(define-key global-map (kbd "C-<tab>") 'elscreen-next)
-(define-key global-map (kbd "C-S-<tab>") 'elscreen-previous)
-(define-key global-map (kbd "A-]") 'elscreen-next)
-(define-key global-map (kbd "A-[") 'elscreen-previous)
-(define-key global-map (kbd "A-}") 'elscreen-next)
-(define-key global-map (kbd "A-{") 'elscreen-previous)
-(define-key global-map (kbd "A-n") 'elscreen-create)
-(define-key global-map (kbd "A-k") 'elscreen-kill)
+(define-key global-map (kbd "C-z n") 'tabbar-forward-tab)
+(define-key global-map (kbd "C-z C-n") 'tabbar-forward-tab)
+(define-key global-map (kbd "C-z p") 'tabbar-backward-tab)
+(define-key global-map (kbd "C-z C-p") 'tabbar-backward-tab)
+(define-key global-map (kbd "C-z a") 'tabbar-local-mode)
+(define-key global-map (kbd "C-z C-a") 'tabbar-mode)
+(define-key global-map (kbd "C-<tab>") 'tabbar-forward-tab)
+(define-key global-map (kbd "C-S-<tab>") 'tabbar-backward-tab)
+(define-key global-map (kbd "A-]") 'tabbar-forward-tab)
+(define-key global-map (kbd "A-[") 'tabbar-backward-tab)
+(define-key global-map (kbd "A-}") 'tabbar-forward-group)
+(define-key global-map (kbd "A-{") 'tabbar-backward-group)
 
 ;; file
 (setq require-final-newline t)

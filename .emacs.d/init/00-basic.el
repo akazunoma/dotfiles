@@ -33,12 +33,29 @@
 (color-theme-midnight)
 (set-frame-parameter nil 'alpha 85)
 (global-hl-line-mode t)
-(set hl-line-face '(:background "Navy" t))
 
-;; elscreen
-;; $ cd
-;; $ curl -O ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-1.4.6.tar.gz
-;; $ tar -xvf elscreen-1.4.6.tar.gz
-;; $ mv elscreen-1.4.6/elscreen.el .emacs.d/elisp/
-(require 'elscreen nil t)
-(setq elscreen-display-tab t)
+;; tabbar
+;; (install-elisp "http://www.emacswiki.org/emacs/download/tabbar.el")
+(require 'tabbar)
+(tabbar-mode t)
+(setq tabbar-buffer-groups-function nil)
+(dolist (button '(tabbar-buffer-home-button
+                  tabbar-scroll-left-button
+                  tabbar-scroll-right-button))
+  (set button (cons (cons "" nil)
+                    (cons "" nil))))
+(setq tabbar-buffer-list-function
+      '(lambda ()
+         (remove-if
+          '(lambda (buffer)
+             (find (aref (buffer-name buffer) 0) " *"))
+           (buffer-list))))
+(set-face-attribute
+ 'tabbar-default nil
+ :height 1.2)
+(set-face-attribute
+ 'tabbar-selected nil
+ :box nil)
+(set-face-attribute
+ 'tabbar-unselected nil
+ :box nil)
