@@ -31,7 +31,7 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-midnight)
-(set-frame-parameter nil 'alpha 85)
+(set-frame-parameter nil 'alpha 100)
 (global-hl-line-mode t)
 
 ;; tabbar
@@ -52,10 +52,21 @@
            (buffer-list))))
 (set-face-attribute
  'tabbar-default nil
- :height 1.2)
+ :family "monaco"
+ :background "gray30"
+ :height 1.0)
 (set-face-attribute
  'tabbar-selected nil
+ :foreground "gray10"
+ :background "gray80"
  :box nil)
 (set-face-attribute
  'tabbar-unselected nil
+ :foreground "gray70"
+ :background "gray30"
  :box nil)
+(set-face-attribute
+ 'tabbar-separator nil
+ :foreground "gray30"
+ :background "gray30")
+(setq tabbar-separator '(1))
