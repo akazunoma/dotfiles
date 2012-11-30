@@ -1,5 +1,9 @@
 ;; Carbon Emacs
 
+;; display
+(tool-bar-mode 0)
+(scroll-bar-mode t)
+
 ;; key
 (mac-key-mode t)
 (setq mac-control-modifier 'control)
