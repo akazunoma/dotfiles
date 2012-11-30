@@ -81,6 +81,16 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
   :group 'init-loader
   :type 'regexp)
 
+(defcustom init-loader-mac-regexp "^mac-"
+  "mac 環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
+  :group 'init-loader
+  :type 'regexp)
+
+(defcustom init-loader-linux-regexp "^linux-"
+  "linux 環境での起動時に読み込まれる設定ファイルにマッチする正規表現"
+  :group 'init-loader
+  :type 'regexp)
+
 ;;; Code
 (defun* init-loader-load (&optional (init-dir init-loader-directory))
   (let ((init-dir (init-loader-follow-symlink init-dir)))
@@ -98,6 +108,12 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
     ;; no window
     (and (null window-system)
          (init-loader-re-load init-loader-nw-regexp init-dir))
+    ;; max
+    (and (equal system-type 'darwin)
+         (init-loader-re-load init-loader-mac-regexp init-dir))
+    ;; linux
+    (and (equal system-type 'gnu/linux)
+         (init-loader-re-load init-loader-linux-regexp init-dir))
 
     (when init-loader-show-log-after-init
       (add-hook  'after-init-hook 'init-loader-show-log))))
