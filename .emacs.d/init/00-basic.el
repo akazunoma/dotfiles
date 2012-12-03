@@ -38,12 +38,15 @@
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/tabbar.el")
 (require 'tabbar)
 (tabbar-mode t)
-(setq tabbar-buffer-groups-function nil)
 (dolist (button '(tabbar-buffer-home-button
                   tabbar-scroll-left-button
                   tabbar-scroll-right-button))
   (set button (cons (cons "" nil)
                     (cons "" nil))))
+(setq tabbar-buffer-groups-function
+      '(lambda ()
+         (list
+          (symbol-name major-mode))))
 (setq tabbar-buffer-list-function
       '(lambda ()
          (remove-if
