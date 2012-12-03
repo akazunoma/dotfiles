@@ -69,3 +69,8 @@
              (add-to-list 'ac-sources 'ac-source-rsense-method)
              (add-to-list 'ac-sources 'ac-source-rsense-constant)
              (define-key ruby-mode-map (kbd "C-x C-.") 'ac-complete)))
+
+;; rinari
+;; $ cd ~/emacs.d/elisp
+;; $ git clone git://github.com/eschulte/rinari.git
+(require 'rinari)
