@@ -94,6 +94,12 @@
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el")
 (require 'point-undo)
 
+;; develock
+;; $ curl -O http://www.jpl.org/elips/develock.el.gz
+;; $ open develock.el.gz
+;; $ mv develock.el ~/.emacs.d/elisp/
+(require 'develock)
+
 ;; auto complete
 ;; $ cd
 ;; $ curl -O http://cx4a.org/pub/auto-complete/auto-complete-1.3.1.tar.bz2
