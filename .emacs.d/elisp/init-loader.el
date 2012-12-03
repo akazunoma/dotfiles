@@ -104,6 +104,7 @@ e.x, 00_hoge.el, 01_huga.el ... 99_keybind.el"
          (init-loader-re-load init-loader-carbon-emacs-regexp init-dir))
     ;; cocoa emacs
     (and (equal window-system 'ns)
+         (init-loader-re-load init-loader-mac-regexp init-dir)
          (init-loader-re-load init-loader-cocoa-emacs-regexp init-dir))
     ;; no window
     (and (null window-system)
