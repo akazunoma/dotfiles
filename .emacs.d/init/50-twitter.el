@@ -13,7 +13,8 @@
 (setq twittering-disable-overlay-on-too-long-string t)
 (add-hook 'twittering-mode-hook
           '(lambda ()
-             (define-key twittering-mode-map (kbd "t") 'other-window-or-split-vertically)
+             (define-key twittering-mode-map (kbd "t") 'next-window-or-split-horizontally)
+             (define-key twittering-mode-map (kbd "T") 'prev-window-or-split-horizontally)
              (define-key twittering-mode-map (kbd "^") 'enlarge-window)
              (define-key twittering-mode-map (kbd "F") 'twittering-favorite)
              (define-key twittering-mode-map (kbd "R") 'twittering-reply-to-user)
