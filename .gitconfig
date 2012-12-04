@@ -69,3 +69,4 @@
   gr   = grep -n
   gri  = grep -n -i
   grl  = grep -l
+  ctags= "!f() { ctags -Re; }; f;"
