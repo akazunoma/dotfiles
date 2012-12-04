@@ -11,6 +11,10 @@
 ;; (auto-install-batch "anything")
 (require 'anything-startup)
 
+;; anything-yaetags
+;; (install-elisp "http://www.emacswiki.org/emacs/download/anything-yaetags.el")
+(require 'anything-yaetags)
+
 ;; recentf-ext
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/recentf-ext.el")
 (setq recentf-max-menu-items 100000)

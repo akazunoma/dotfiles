@@ -28,6 +28,7 @@
 (define-key global-map (kbd "M-_") 'redo)
 (define-key global-map (kbd "M-t") 'delete-window)
 (define-key global-map (kbd "M-w") 'kill-region)
+(define-key global-map (kbd "M-.") 'anything-yaetags-find-tag)
 (define-key global-map (kbd "C-M-a") 'backward-sentence)
 (define-key global-map (kbd "C-M-e") 'forward-sentence)
 (define-key global-map (kbd "C-M-f") 'forward-word)
