@@ -1,72 +1,72 @@
 [user]
-  name = Kazuya Takeshima
+  name  = Kazuya Takeshima
   email = mail@mitukiii.jp
 [color]
-  ui = auto
-  status = auto
-  diff = auto
-  branch = auto
+  ui          = auto
+  status      = auto
+  diff        = auto
+  branch      = auto
   interactive = auto
-  grep = auto
+  grep        = auto
 [color "diff"]
   plain = normal
-  meta = bold green
-  frag = bold cyan
-  func = bold magenta
-  old = bold red
-  new = bold blue
-  commit = bold white
+  meta       = bold green
+  frag       = bold cyan
+  func       = bold magenta
+  old        = bold red
+  new        = bold blue
+  commit     = bold white
   whitespace = normal magenta
 [core]
   excludesfile = ~/.gitignore
-  autocrlf = input
+  autocrlf     = input
 [help]
   autocorrect = 1
 [alias]
-  s    = status
-  st   = status
-  ss   = status -s
-  sh   = show
-  a    = add
-  ad   = add
-  ap   = add -p
-  c    = commit
-  ca   = commit -a
-  cam  = commit --amend
-  caam = commit -a --amend
-  cp   = cherry-pick
-  cpn  = cherry-pick -n
-  co   = checkout
-  cb   = checkout -b
-  cm   = checkout master
-  rb   = rebase
-  rbm  = rebase master
-  rbi  = rebase -i
-  rbo  = rebase --onto
-  rbc  = rebase --continue
-  rba  = rebase --abort
-  rs   = reset
-  rss  = reset --soft
-  rssh = reset --soft HEAD^
-  rsh  = reset --hard
-  rshh = reset --hard HEAD^
-  m    = merge
-  mn   = merge --no-ff
-  ms   = merge --squash
-  br   = branch
-  ba   = branch -a
-  ft   = fetch
-  pl   = pull
-  ps   = push
-  l    = log --stat --date=iso
-  la   = log -p --date=iso
-  ll   = log --graph --date=iso --all --pretty=format:'%h %Cgreen%ad %Cblue%cn %Creset%s %Cred%d'
-  lf   = "!f() { git log $1..$2 --name-only --oneline | grep -v ' ' | sort -u; }; f"
-  d    = diff
-  dm   = diff master
-  dw   = diff --color-words
-  dc   = diff --cached
-  gr   = grep -n
-  gri  = grep -n -i
-  grl  = grep -l
-  ctags= "!f() { ctags -Re; }; f;"
+  s     = status
+  st    = status
+  ss    = status -s
+  sh    = show
+  a     = add
+  ad    = add
+  ap    = add -p
+  c     = commit
+  ca    = commit -a
+  cam   = commit --amend
+  caam  = commit -a --amend
+  cp    = cherry-pick
+  cpn   = cherry-pick -n
+  co    = checkout
+  cb    = checkout -b
+  cm    = checkout master
+  rb    = rebase
+  rbm   = rebase master
+  rbi   = rebase -i
+  rbo   = rebase --onto
+  rbc   = rebase --continue
+  rba   = rebase --abort
+  rs    = reset
+  rss   = reset --soft
+  rssh  = reset --soft HEAD^
+  rsh   = reset --hard
+  rshh  = reset --hard HEAD^
+  m     = merge
+  mn    = merge --no-ff
+  ms    = merge --squash
+  br    = branch
+  ba    = branch -a
+  ft    = fetch
+  pl    = pull
+  ps    = push
+  l     = log --stat --date=iso
+  la    = log -p --date=iso
+  ll    = log --graph --date=iso --all --pretty=format:'%h %Cgreen%ad %Cblue%cn %Creset%s %Cred%d'
+  lf    = "!f() { git log $1..$2 --name-only --oneline | grep -v ' ' | sort -u; }; f"
+  d     = diff
+  dm    = diff master
+  dw    = diff --color-words
+  dc    = diff --cached
+  gr    = grep -n
+  gri   = grep -n -i
+  grl   = grep -l
+  ctags = "!f() { ctags -Re; }; f;"
