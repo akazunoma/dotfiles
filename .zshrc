@@ -191,6 +191,30 @@ function take() {
     cd $1
 }
 
+function percol-search-document(){
+    if [ $# -ge 1 ]; then
+        DOCUMENT_DIR=$*
+    else
+        DOCUMENT_DIR="$HOME/Documents $HOME/Dropbox"
+    fi
+    SELECTED_FILE=$(echo $DOCUMENT_DIR | xargs find | grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | percol --match-method migemo)
+    if [ $? -eq 0 ]; then
+        echo $SELECTED_FILE
+    fi
+}
+
+function percol-search-locate(){
+    if [ $# -ge 1 ]; then
+        SELECTED_FILE=$(locate $1 | percol --match-method migemo)
+        if [ $? -eq 0 ]; then
+            echo $SELECTED_FILE
+        fi
+    else
+        locate
+    fi
+}
+
+## neta
 function nyan() {
     echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
 }
@@ -260,7 +284,12 @@ alias rs="rails server"
 alias saba='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias shimesaba='pkill -f "python -m SimpleHTTPServer"'
 
+alias sd='percol-search-document'
+alias sp='percol-search-locate'
+
 ## pipe aliases
+alias -g E='| xargs emacsclient -n'
+alias -g O='| xargs open'
 alias -g L='| less'
 alias -g H='| head'
 alias -g T='| tail'
