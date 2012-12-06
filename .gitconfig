@@ -22,6 +22,8 @@
   autocrlf     = input
 [help]
   autocorrect = 1
+[merge]
+  ff = false
 [push]
   default = simple
 [alias]
