@@ -73,6 +73,16 @@ autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
+if which percol > /dev/null; then
+  function percol_select_history() {
+    BUFFER=$(history -n 1 | tail -r | percol --match-method migemo --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+  }
+  zle -N percol_select_history
+  bindkey '^r' percol_select_history
+fi
+
 ## bind
 bindkey -e
 bindkey "^p" history-beginning-search-backward-end
