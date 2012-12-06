@@ -22,6 +22,8 @@
   autocrlf     = input
 [help]
   autocorrect = 1
+[push]
+  default = simple
 [alias]
   s     = status
   st    = status
