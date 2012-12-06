@@ -14,12 +14,12 @@ local white="%{${fg[white]}%}"
 local base_color=""
 
 case $OSTYPE in
-darwin*)
-  base_color=$cyan
-  ;;
-*)
-  base_color=$green
-  ;;
+    darwin*)
+        base_color=$cyan
+        ;;
+    *)
+        base_color=$green
+        ;;
 esac
 
 ## prompt
@@ -34,10 +34,10 @@ function _update_rprompt() {
     psvar=()
     LANG=en_US.UTF-8 vcs_info
     if [ -n "$vcs_info_msg_0_" ]; then
-      psvar[1]="$vcs_info_msg_0_"
+        psvar[1]="$vcs_info_msg_0_"
     fi
     if which rvm-prompt &> /dev/null; then
-      psvar[2]="$(rvm-prompt i v g)"
+        psvar[2]="$(rvm-prompt i v g)"
     fi
 }
 add-zsh-hook precmd _update_rprompt
@@ -115,22 +115,22 @@ zstyle ':completion:*:*:*:*:*' menu select
 [ -r $HOME/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
-  "$_global_ssh_hosts[@]"
-  "$_ssh_hosts[@]"
-  "$_etc_hosts[@]"
-  "$HOST"
-  localhost
-)
+    "$_global_ssh_hosts[@]"
+    "$_ssh_hosts[@]"
+    "$_etc_hosts[@]"
+    "$HOST"
+    localhost
+    )
 zstyle ':completion:*:hosts' hosts $hosts
 
 zstyle ':completion:*:*:*:users' ignored-patterns \
-        adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-        dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
-        hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-        mailman mailnull mldonkey mysql nagios \
-        named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-        operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-        rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs
+    adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+    dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+    hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+    mailman mailnull mldonkey mysql nagios \
+    named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+    operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+    rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs
 
 autoload -Uz select-word-style
 select-word-style default
@@ -145,9 +145,9 @@ source $HOME/.zsh/hub.zsh_completion
 ## editor
 export EDITOR=vim
 case $OSTYPE in
-darwin*)
-  export EDITOR=emacsclient
-  ;;
+    darwin*)
+        export EDITOR=emacsclient
+        ;;
 esac
 
 ## path
@@ -155,42 +155,42 @@ export PATH=/usr/local/bin:$PATH
 export RSENSE_HOME=$HOME/.emacs.d/elisp/rsense
 
 case $OSTYPE in
-darwin*)
-  export ANDROID_HOME=/usr/local/android-sdk-macosx
-  export PATH=$PATH:$ANDROID_HOME/tools
-  export PATH=$PATH:$ANDROID_HOME/platform-tools
-  export NODE_PATH=/usr/local/lib/node_modules
-  export GISTY_DIR=$HOME/Dropbox/Gist
-  export PATH=$PATH:$HOME/.rvm/bin
-  source $HOME/.rvm/scripts/rvm
-  export PERLBREW_ROOT=/usr/local/perlbrew
-  source $PERLBREW_ROOT/etc/bashrc
-  ;;
-linux*)
-  export PATH=$PATH:/var/lib/gems/1.9.1/bin
-  ;;
+    darwin*)
+        export ANDROID_HOME=/usr/local/android-sdk-macosx
+        export PATH=$PATH:$ANDROID_HOME/tools
+        export PATH=$PATH:$ANDROID_HOME/platform-tools
+        export NODE_PATH=/usr/local/lib/node_modules
+        export GISTY_DIR=$HOME/Dropbox/Gist
+        export PATH=$PATH:$HOME/.rvm/bin
+        source $HOME/.rvm/scripts/rvm
+        export PERLBREW_ROOT=/usr/local/perlbrew
+        source $PERLBREW_ROOT/etc/bashrc
+        ;;
+    linux*)
+        export PATH=$PATH:/var/lib/gems/1.9.1/bin
+        ;;
 esac
 
 ## functions
 function stats() {
-  fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
+    fc -l 1 | awk '{print $2}' | sort | uniq -c | sort -rn | head
 }
 
 function take() {
-  mkdir -p $1
-  cd $1
+    mkdir -p $1
+    cd $1
 }
 
 function nyan() {
-  echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
+    echo "$1ーーー$2！！$1$2$1ーーーーーー$2！！！！$1$2$1$1ーー$2$1$2！！！$1$2$1ー$2！！！！$1$1$1$1$1$1$1$1$1$1$1$1ーーーー$2！！！！！"
 }
 
 function nenne() {
-  echo "$1$2したいよー！！！！$1$2ーーーー！！！！$1$2ー！！！$1$2$1$2$1$2$1$2！！$1$2がしたいの！！$1$2っ！！ウーーー！！！WOOOOOOO!!!!!$1っ！！$2！！！$1$2させてくれ$1$2！！$1$2！！$1$2！！"
+    echo "$1$2したいよー！！！！$1$2ーーーー！！！！$1$2ー！！！$1$2$1$2$1$2$1$2！！$1$2がしたいの！！$1$2っ！！ウーーー！！！WOOOOOOO!!!!!$1っ！！$2！！！$1$2させてくれ$1$2！！$1$2！！$1$2！！"
 }
 
 function keshisaru() {
-  echo "全ての$1を、生まれる前に消し去りたい。全ての宇宙、過去と未来の全ての$1を、この手で。"
+    echo "全ての$1を、生まれる前に消し去りたい。全ての宇宙、過去と未来の全ての$1を、この手で。"
 }
 
 ## aliases
@@ -199,18 +199,18 @@ setopt complete_aliases
 alias reload_zsh="source $HOME/.zshrc"
 
 case $OSTYPE in
-darwin*)
-  alias ls="ls -G"
-  alias git="hub"
-  alias emacs="open -a emacs"
-  alias e="emacs"
-  alias en="open -a emacs -n --args --debug-init"
-  alias pwcopy="pwd | perl -pe 's/\n//' | pbcopy"
-  ;;
-linux*)
-  alias e="emacs"
-  alias ls="ls --color"
-  ;;
+    darwin*)
+        alias ls="ls -G"
+        alias git="hub"
+        alias emacs="open -a emacs"
+        alias e="emacs"
+        alias en="open -a emacs -n --args --debug-init"
+        alias pwcopy="pwd | perl -pe 's/\n//' | pbcopy"
+        ;;
+    linux*)
+        alias e="emacs"
+        alias ls="ls --color"
+        ;;
 esac
 
 alias l="ls -1"
@@ -257,5 +257,5 @@ export FIGNORE=".svn"
 
 ## include
 if [ -f $HOME/.zshrc.local ]; then
-  source $HOME/.zshrc.local
+    source $HOME/.zshrc.local
 fi
