@@ -250,6 +250,13 @@ alias rs="rails server"
 alias saba='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias shimesaba='pkill -f "python -m SimpleHTTPServer"'
 
+## pipe aliases
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g S='| gsed'
+
 ## options
 export GREP_OPTIONS='--color=auto --exclude=*.git*'
 
