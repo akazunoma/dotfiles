@@ -43,4 +43,5 @@
 (setq migemo-user-dictionary nil)
 (setq migemo-regex-dictionary nil)
 (setq migemo-coding-system 'utf-8-unix)
+(set-process-query-on-exit-flag (get-process "migemo") nil)
 ;; init with "(mac|linux)-basic.el"
