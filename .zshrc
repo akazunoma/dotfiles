@@ -191,7 +191,7 @@ function take() {
     cd $1
 }
 
-function percol-search-document(){
+function percol_search_document() {
     if [ $# -ge 1 ]; then
         DOCUMENT_DIR=$*
     else
@@ -199,15 +199,15 @@ function percol-search-document(){
     fi
     SELECTED_FILE=$(echo $DOCUMENT_DIR | xargs find | grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | percol --match-method migemo)
     if [ $? -eq 0 ]; then
-        echo $SELECTED_FILE
+        echo $SELECTED_FILE | sed 's/ /\\ /g'
     fi
 }
 
-function percol-search-locate(){
+function percol_locate() {
     if [ $# -ge 1 ]; then
-        SELECTED_FILE=$(locate $1 | percol --match-method migemo)
+        SELECTED_FILE=$(locate $* | percol --match-method migemo)
         if [ $? -eq 0 ]; then
-            echo $SELECTED_FILE
+            echo $SELECTED_FILE | sed 's/ /\\ /g'
         fi
     else
         locate
@@ -284,8 +284,8 @@ alias rs="rails server"
 alias saba='python -m SimpleHTTPServer > /dev/null 2>&1 &'
 alias shimesaba='pkill -f "python -m SimpleHTTPServer"'
 
-alias sd='percol-search-document'
-alias sp='percol-search-locate'
+alias sd='percol_search_document'
+alias sp='percol_locate'
 
 ## pipe aliases
 alias -g E='| xargs emacsclient -n'
