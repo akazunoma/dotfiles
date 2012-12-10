@@ -84,6 +84,10 @@
 (setq-default c-toggle-auto-state 0)
 (setq-default c-toggle-hungry-state 1)
 
+;; camelize
+;; (install-elisp "https://raw.github.com/gist/1813733/camelize.el")
+(require 'camelize)
+
 ;; savekill
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/savekill.el")
 (require 'savekill)
