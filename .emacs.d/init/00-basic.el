@@ -7,10 +7,10 @@
 (setq locale-coding-system 'utf-8)
 
 ;; display
-(setq initial-frame-alist
+(setq default-frame-alist
       '((width . 150)
-        (height . 45)))
-(setq default-frame-alist initial-frame-alist)
+        (height . 45)
+        (font . "-apple-monaco-medium-r-normal--13-120-72-72-m-120-iso10646-1")))
 (display-time-mode t)
 (menu-bar-mode 0)
 (line-number-mode t)
