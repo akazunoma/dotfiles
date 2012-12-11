@@ -20,11 +20,7 @@ function _create_symlink_unless_exists() {
 DOTFILES=(.zshrc .zsh .emacs.d .gitconfig .gitignore .screenrc .gemrc .pryrc .percol.d)
 for name in ${DOTFILES[@]}
 do
-    if [ -d $DOTFILES_DIR/$name ]; then
-        _create_symlink_unless_exists $DOTFILES_DIR/$name/ $HOME/$name
-    else
-        _create_symlink_unless_exists $DOTFILES_DIR/$name $HOME/$name
-    fi
+    _create_symlink_unless_exists $DOTFILES_DIR/$name $HOME/$name
 done
 
 ## .screenrc.local
