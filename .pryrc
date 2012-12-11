@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
 
-require 'rubygems'
-require 'open-uri'
-require 'yaml'
-require 'json'
-require 'hashie'
-require 'pp'
+Pry.config.tap do |config|
+  config.editor = lambda do |file, line|
+    "emacsclient -n +#{line} #{file}"
+  end
 
-Pry.prompt = proc { '> ' }
+  config.pager = false
+
+  config.prompt = [
+    lambda { |obj, level, _| "> " },
+    lambda { |obj, level, _| "  " }
+  ]
+
+  config.exception_handler = lambda do |output, exception, _|
+    output.puts "\e[31m#{exception.class}: #{exception.message}"
+    output.puts "from #{exception.backtrace.first}\e[0m"
+  end
+end
