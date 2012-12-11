@@ -1,13 +1,8 @@
-# !!! オレの dotfiles !!!
+# dotfiles
 
 ## Installation
 
-```zsh
+```sh
 git clone git://github.com/mitukiii/dotfiles.git
-ruby dotfiles/setup.rb
+dotfiles/setup.sh
 ```
-
-## TODO
-
-* emacs に rinari 入れる
-* zsh もっと便利にする
