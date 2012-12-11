@@ -2,8 +2,12 @@
 percol.view.PROMPT  = ur"<green>（、･∀･）、</green> %q"
 
 # migemo
+import sys
 from percol.finder import FinderMultiQueryMigemo
-FinderMultiQueryMigemo.dictionary_path = "/usr/local/Cellar/cmigemo/20110227/share/migemo/utf-8/migemo-dict"
+if sys.platform == "darwin":
+    FinderMultiQueryMigemo.dictionary_path = "/usr/local/Cellar/cmigemo/20110227/share/migemo/utf-8/migemo-dict"
+else:
+    FinderMultiQueryMigemo.dictionary_path = "/usr/share/cmigemo/utf-8/migemo-dict"
 
 # keymap
 percol.import_keymap({
