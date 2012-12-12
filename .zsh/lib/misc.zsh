@@ -28,7 +28,7 @@ case $OSTYPE in
         # Node
         export NODE_PATH=/usr/local/lib/node_modules
         # Android
-        export ANDROID_HOME=/usr/local/android-sdk-macosx
+        export ANDROID_HOME=/usr/local/var/lib/android-sdk
         export PATH=$PATH:$ANDROID_HOME/tools
         export PATH=$PATH:$ANDROID_HOME/platform-tools
         # Gisty
