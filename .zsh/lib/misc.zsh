@@ -15,9 +15,6 @@ case $OSTYPE in
         # RVM
         export PATH=$PATH:$HOME/.rvm/bin
         source $HOME/.rvm/scripts/rvm
-        # Perlbrew
-        export PERLBREW_ROOT=/usr/local/perlbrew
-        source $PERLBREW_ROOT/etc/bashrc
         # Node
         export NODE_PATH=/usr/local/lib/node_modules
         # Android
