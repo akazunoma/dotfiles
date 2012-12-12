@@ -4,14 +4,7 @@
 export LANG=ja_JP.UTF-8
 
 # Editor
-case $OSTYPE in
-    darwin*)
-        export EDITOR=emacsclient
-        ;;
-    *)
-        export EDITOR=vim
-        ;;
-esac
+export EDITOR=vim
 
 # Path
 export PATH=/usr/local/bin:$PATH
