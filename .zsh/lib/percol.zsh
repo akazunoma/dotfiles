@@ -13,7 +13,6 @@ function percol-insert-file() {
     zle clear-screen
 }
 zle -N percol-insert-file
-bindkey '^[c' percol-insert-file
 
 # History
 function percol-select-history() {
@@ -30,7 +29,6 @@ function percol-select-history() {
     zle clear-screen
 }
 zle -N percol-select-history
-bindkey '^r' percol-select-history
 
 # Search
 function percol-search-document() {
@@ -62,6 +60,10 @@ function percol-search-locate() {
     fi
 }
 
+bindkey '^[c' percol-insert-file
+bindkey '^r' percol-select-history
+
 alias pd='percol-search-document'
 alias pl='percol-search-locate'
 
+alias -g P="| percol --match-method migemo"
