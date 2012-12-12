@@ -1,4 +1,5 @@
-import sys
+import sys, commands
+from percol.command import SelectorCommand
 from percol.key import SPECIAL_KEYS
 from percol.finder import FinderMultiQueryMigemo, FinderMultiQueryRegex
 
@@ -26,6 +27,18 @@ if sys.platform == "darwin":
 else:
     FinderMultiQueryMigemo.dictionary_path = "/usr/local/share/migemo/utf-8/migemo-dict"
 
+## kill
+if sys.platform == "darwin":
+    def copy_end_of_line_as_kill(self):
+        commands.getoutput("echo " + self.model.query[self.model.caret:] + " | pbcopy")
+        self.model.query  = self.model.query[:self.model.caret]
+
+    def paste_as_yank(self):
+        self.model.insert_string(commands.getoutput("pbpaste"))
+
+    SelectorCommand.kill_end_of_line = copy_end_of_line_as_kill
+    SelectorCommand.yank = paste_as_yank
+
 ## keymap
 # map backspace
 SPECIAL_KEYS.update({
@@ -38,6 +51,8 @@ percol.import_keymap({
     "C-f" : lambda percol: percol.command.forward_char(),
     "C-d" : lambda percol: percol.command.delete_forward_char(),
     "C-h" : lambda percol: percol.command.delete_backward_char(),
+    "C-k" : lambda percol: percol.command.kill_end_of_line(),
+    "C-y" : lambda percol: percol.command.yank(),
     "C-n" : lambda percol: percol.command.select_next(),
     "C-p" : lambda percol: percol.command.select_previous(),
     "C-v" : lambda percol: percol.command.select_next_page(),
