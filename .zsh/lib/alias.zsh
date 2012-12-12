@@ -22,14 +22,22 @@ alias gr="grep"
 alias gri="grep -i"
 alias grl="grep -l"
 
+alias rsync-copy="rsync -av --progress -h"
+alias rsync-move="rsync -av --progress -h --remove-source-files"
+alias rsync-update="rsync -avu --progress -h"
+alias rsync-synchronize="rsync -avu --delete --progress -h"
+
 alias du="du -h"
 alias df="df -h"
+
+alias h="history"
 
 alias s="screen"
 
 alias g="git"
 alias gs="git status"
 alias ga="git add"
+alias gd="git add"
 alias gc="git commit"
 
 alias ec="emacsclient -n"
