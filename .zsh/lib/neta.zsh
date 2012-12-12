@@ -11,4 +11,3 @@ function nenne() {
 function keshisaru() {
     echo "全ての$1を、生まれる前に消し去りたい。全ての宇宙、過去と未来の全ての$1を、この手で。"
 }
-

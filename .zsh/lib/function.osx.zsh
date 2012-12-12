@@ -14,10 +14,11 @@ function copy-line-as-kill() {
     print -rn $CUTBUFFER | pbcopy
 }
 zle -N copy-line-as-kill
-bindkey '^k' copy-line-as-kill
 
 function paste-as-yank() {
     pbpaste
 }
 zle -N paste-as-yank
+
+bindkey '^k' copy-line-as-kill
 bindkey "^y" paste-as-yank
